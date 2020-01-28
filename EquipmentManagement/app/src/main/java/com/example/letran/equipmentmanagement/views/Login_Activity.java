@@ -46,7 +46,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Initiate();
-
+        Log.e("test","test");
         btnLogin.setOnClickListener(this);
         btnRegistration.setOnClickListener(this);
     }
