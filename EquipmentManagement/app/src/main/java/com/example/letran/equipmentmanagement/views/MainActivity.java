@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Log.e("test","test");
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         actionBar = getSupportActionBar();
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());

@@ -2,6 +2,7 @@ package com.example.letran.equipmentmanagement.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         Device device = lstDevices.get(position);
         holder.txtname.setText(device.getName());
         holder.txtdate.setText(device.getCreate_time());
-        //holder.dot.setText(Html.fromHtml("&#8226;"));
+        holder.txtdot.setText(Html.fromHtml("&#8226;"));
 
         if(device.getUrl_image() != null){
             Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
@@ -47,13 +48,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtname,txtdate;
+        public TextView txtname,txtdate,txtdot;
         private ImageView imageView;
 
         public MyViewHolder(View view) {
             super(view);
             txtname = (TextView)view.findViewById(R.id.name);
             txtdate = (TextView)view.findViewById(R.id.date);
+            txtdot = (TextView)view.findViewById(R.id.dot);
             imageView = (ImageView)view.findViewById(R.id.image);
         }
     }
