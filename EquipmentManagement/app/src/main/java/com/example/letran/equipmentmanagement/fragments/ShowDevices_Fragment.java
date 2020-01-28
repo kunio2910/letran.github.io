@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.example.letran.equipmentmanagement.models.Device;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 import com.example.letran.equipmentmanagement.utils.MyDividerItemDecoration;
+import com.example.letran.equipmentmanagement.views.InputDevices_Activity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,12 +37,15 @@ public class ShowDevices_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressDialog pDialog;
     private DevicesAdapter mAdapter;
+    private FloatingActionButton fab;
+    private Context context;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_alldevices,container,false);
         Initiate(rootView);
+        context = container.getContext();
         pDialog = new ProgressDialog(container.getContext());
         GetAllDevices(container.getContext());
         return rootView;
@@ -48,6 +53,15 @@ public class ShowDevices_Fragment extends Fragment {
 
     private void Initiate(View view){
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+        fab = (FloatingActionButton)view.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),InputDevices_Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void GetAllDevices(final Context context){
@@ -131,5 +145,11 @@ public class ShowDevices_Fragment extends Fragment {
     public void onPause() {
         super.onPause();
         AppConfig.LST_DEVICES.clear();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetAllDevices(context);
     }
 }

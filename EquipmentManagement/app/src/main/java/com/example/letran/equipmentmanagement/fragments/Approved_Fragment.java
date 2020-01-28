@@ -33,11 +33,13 @@ public class Approved_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressDialog pDialog;
     private DevicesAdapter mAdapter;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_approved,container,false);
         Initiate(rootView);
+        context = container.getContext();
         pDialog = new ProgressDialog(container.getContext());
         GetAllDevicesApproved(container.getContext());
         return rootView;
@@ -129,5 +131,11 @@ public class Approved_Fragment extends Fragment {
     public void onPause() {
         super.onPause();
         AppConfig.LST_DEVICES_APPROVED.clear();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetAllDevicesApproved(context);
     }
 }
