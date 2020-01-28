@@ -52,6 +52,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
     }
 
     private void Initiate(){
+        AppConfig.NAME_USER = "";
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegistration = (Button)findViewById(R.id.btnLinkToRegistrerScreen);
 
@@ -113,6 +114,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                         Log.e("info", "Login Response: " + response.toString());
                         if(name.equals(name_temp) && password.equals(password_temp)){
                             isCheckLogin = true;
+                            AppConfig.NAME_USER = name;
                             break;
                         }
                     }

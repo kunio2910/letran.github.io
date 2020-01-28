@@ -31,6 +31,7 @@ public class AppConfig {
     public static String METHOD_POST = "POST";
     public static String PERMISSION_DEFAULT = "1";
 
+    public static String NAME_USER;
     public static List<Device> LST_DEVICES = new ArrayList<>();
     public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();
 }

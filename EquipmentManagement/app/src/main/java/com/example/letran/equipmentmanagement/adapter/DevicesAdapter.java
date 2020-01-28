@@ -37,7 +37,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         holder.txtdate.setText(device.getCreate_time());
         holder.txtdot.setText(Html.fromHtml("&#8226;"));
 
-        if(device.getUrl_image() != null){
+        if(!device.getUrl_image().isEmpty()){
             Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
         }
     }

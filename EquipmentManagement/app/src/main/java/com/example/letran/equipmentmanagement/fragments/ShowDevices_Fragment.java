@@ -60,11 +60,13 @@ public class ShowDevices_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),InputDevices_Activity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
     }
 
     private void GetAllDevices(final Context context){
+        AppConfig.LST_DEVICES.clear();
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
@@ -145,11 +147,5 @@ public class ShowDevices_Fragment extends Fragment {
     public void onPause() {
         super.onPause();
         AppConfig.LST_DEVICES.clear();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        GetAllDevices(context);
     }
 }

@@ -50,6 +50,7 @@ public class Approved_Fragment extends Fragment {
     }
 
     private void GetAllDevicesApproved(final Context context) {
+        AppConfig.LST_DEVICES_APPROVED.clear();
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
@@ -133,9 +134,4 @@ public class Approved_Fragment extends Fragment {
         AppConfig.LST_DEVICES_APPROVED.clear();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        GetAllDevicesApproved(context);
-    }
 }
