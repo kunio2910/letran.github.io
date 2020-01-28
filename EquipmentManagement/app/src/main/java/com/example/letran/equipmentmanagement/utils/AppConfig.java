@@ -32,4 +32,5 @@ public class AppConfig {
     public static String PERMISSION_DEFAULT = "1";
 
     public static List<Device> LST_DEVICES = new ArrayList<>();
+    public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();
 }

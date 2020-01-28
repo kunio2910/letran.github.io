@@ -24,6 +24,7 @@ import com.example.letran.equipmentmanagement.adapter.DevicesAdapter;
 import com.example.letran.equipmentmanagement.models.Device;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.utils.MyDividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +91,8 @@ public class ShowDevices_Fragment extends Fragment {
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
                             recyclerView.setLayoutManager(mLayoutManager);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
-                            //recyclerView.addItemDecoration(new MyDividerItemDecoration(ShowProducts_Activity.this,LinearLayoutManager.VERTICAL,16));
+                            //Adding RecyclerView Divider / Separator
+                            recyclerView.addItemDecoration(new MyDividerItemDecoration(context,LinearLayoutManager.VERTICAL,16));
                             recyclerView.setAdapter(mAdapter);
                         }
                     }
@@ -123,5 +125,11 @@ public class ShowDevices_Fragment extends Fragment {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppConfig.LST_DEVICES.clear();
     }
 }

@@ -14,7 +14,7 @@ import com.example.letran.equipmentmanagement.adapter.TabsPagerAdapter;
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     private ViewPager viewPager;
-    private ActionBar actionBar;
+    public ActionBar actionBar;
     private TabsPagerAdapter mAdapter;
     //Tab titles
     private String[] tabs = {"All Devices", "Devices approved"};
