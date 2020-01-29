@@ -28,9 +28,11 @@ import com.example.letran.equipmentmanagement.utils.AppController;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class InputDevices_Activity extends Activity implements View.OnClickListener {
@@ -74,6 +76,7 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 if (!name.isEmpty() && !description.isEmpty() && !issue.isEmpty()) {
                     AddImage(AppConfig.NAME_USER,name,image_encode);
                     AddDevice(name,description,issue);
+                    btnAdd.setEnabled(false);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter device details!", Toast.LENGTH_LONG)
@@ -141,19 +144,22 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 Log.e("infor", "Login Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         "Please login again ...", Toast.LENGTH_LONG).show();
+                btnAdd.setEnabled(true);
                 hideDialog();
             }
         }){
             @Override
             public Map<String, String> getParams(){
-                Date currentTime = Calendar.getInstance().getTime();
+                //Date currentTime = Calendar.getInstance().getTime();
+                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
                 params.put("description", description);
                 params.put("issue", issue);
                 params.put("url_image", "");
-                params.put("create_time", String.valueOf(currentTime));
+                //params.put("create_time", String.valueOf(currentTime));
+                params.put("create_time", currentDate);
                 params.put("approver", "");
 
                 return params;
@@ -188,7 +194,6 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
         }){
             @Override
             public Map<String, String> getParams(){
-                Date currentTime = Calendar.getInstance().getTime();
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name_user", name_user);

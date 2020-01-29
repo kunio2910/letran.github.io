@@ -41,7 +41,7 @@ public class Approved_Fragment extends Fragment {
         Initiate(rootView);
         context = container.getContext();
         pDialog = new ProgressDialog(container.getContext());
-        GetAllDevicesApproved(container.getContext());
+        context = container.getContext();
         return rootView;
     }
 
@@ -134,4 +134,9 @@ public class Approved_Fragment extends Fragment {
         AppConfig.LST_DEVICES_APPROVED.clear();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetAllDevicesApproved(context);
+    }
 }

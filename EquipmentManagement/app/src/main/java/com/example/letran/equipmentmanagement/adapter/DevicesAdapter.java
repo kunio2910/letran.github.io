@@ -39,6 +39,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
 
         if(!device.getUrl_image().isEmpty()){
             Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
+        }else{
+            holder.imageView.setImageResource(R.drawable.notfoundimage);
         }
     }
 

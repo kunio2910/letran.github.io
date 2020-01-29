@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,7 +27,9 @@ import com.example.letran.equipmentmanagement.models.Device;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 import com.example.letran.equipmentmanagement.utils.MyDividerItemDecoration;
+import com.example.letran.equipmentmanagement.utils.RecyclerTouchListener;
 import com.example.letran.equipmentmanagement.views.InputDevices_Activity;
+import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +50,7 @@ public class ShowDevices_Fragment extends Fragment {
         Initiate(rootView);
         context = container.getContext();
         pDialog = new ProgressDialog(container.getContext());
-        GetAllDevices(container.getContext());
+        context = container.getContext();
         return rootView;
     }
 
@@ -60,9 +63,32 @@ public class ShowDevices_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),InputDevices_Activity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getContext(),ShowDetail_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", AppConfig.LST_DEVICES.get(position).getName());
+                bundle.putString("description", AppConfig.LST_DEVICES.get(position).getDescription());
+                bundle.putString("issue", AppConfig.LST_DEVICES.get(position).getIssue());
+                bundle.putString("url_image", AppConfig.LST_DEVICES.get(position).getUrl_image());
+                bundle.putString("create_time", AppConfig.LST_DEVICES.get(position).getCreate_time());
+                bundle.putString("approver", AppConfig.LST_DEVICES.get(position).getApprover());
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getContext(),"LongClick",Toast.LENGTH_LONG).show();
+            }
+        }));
     }
 
     private void GetAllDevices(final Context context){
@@ -147,5 +173,11 @@ public class ShowDevices_Fragment extends Fragment {
     public void onPause() {
         super.onPause();
         AppConfig.LST_DEVICES.clear();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetAllDevices(context);
     }
 }
