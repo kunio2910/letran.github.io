@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_login">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DETAIL DEVICE"
+        android:textSize="23dp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:id="@+id/titleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAME :"
+        android:layout_margin="10dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/title"/>
+
+    <TextView
+        android:id="@+id/txtname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/titleName"
+        android:layout_below="@+id/title"
+        android:layout_margin="10dp"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/titleCreateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CREATE TIME :"
+        android:layout_margin="10dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/titleName"/>
+
+    <TextView
+        android:id="@+id/txtcreatetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/titleCreateTime"
+        android:layout_below="@+id/txtname"
+        android:layout_margin="10dp"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/titleDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION :"
+        android:layout_margin="10dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/titleCreateTime"/>
+
+    <TextView
+        android:id="@+id/txtdescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/titleCreateTime"
+        android:layout_below="@+id/txtcreatetime"
+        android:layout_margin="10dp"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/titleIssue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ISSUE :"
+        android:layout_margin="10dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/titleDescription"/>
+
+    <TextView
+        android:id="@+id/txtIssue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/titleCreateTime"
+        android:layout_below="@+id/txtdescription"
+        android:layout_margin="10dp"
+        android:textSize="15dp"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/txtIssue"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/notfoundimage"/>
+</RelativeLayout>
