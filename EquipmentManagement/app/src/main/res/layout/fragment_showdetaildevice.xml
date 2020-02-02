@@ -1,96 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_login">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DETAIL DEVICE"
-        android:textSize="23dp"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/titleName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NAME :"
-        android:layout_margin="10dp"
-        android:textSize="15dp"
-        android:layout_below="@+id/title"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="DETAIL DEVICE"
+            android:textColor="@color/white"
+            android:textSize="23dp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/txtname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/titleName"
-        android:layout_below="@+id/title"
-        android:layout_margin="10dp"
-        android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="NAME :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/titleCreateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CREATE TIME :"
-        android:layout_margin="10dp"
-        android:textSize="15dp"
-        android:layout_below="@+id/titleName"/>
+        <TextView
+            android:id="@+id/txtname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/titleName"
+            android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/txtcreatetime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/titleCreateTime"
-        android:layout_below="@+id/txtname"
-        android:layout_margin="10dp"
-        android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/titleCreateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="CREATE TIME :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/titleDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DESCRIPTION :"
-        android:layout_margin="10dp"
-        android:textSize="15dp"
-        android:layout_below="@+id/titleCreateTime"/>
+        <TextView
+            android:id="@+id/txtcreatetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtname"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/titleCreateTime"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="8dp"
+            android:autoSizeMaxTextSize="15dp" />
 
-    <TextView
-        android:id="@+id/txtdescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/titleCreateTime"
-        android:layout_below="@+id/txtcreatetime"
-        android:layout_margin="10dp"
-        android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/titleDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleCreateTime"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="DESCRIPTION :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/titleIssue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ISSUE :"
-        android:layout_margin="10dp"
-        android:textSize="15dp"
-        android:layout_below="@+id/titleDescription"/>
+        <TextView
+            android:id="@+id/txtdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtcreatetime"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/titleCreateTime"
+            android:textSize="15dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="11dp"/>
 
-    <TextView
-        android:id="@+id/txtIssue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/titleCreateTime"
-        android:layout_below="@+id/txtdescription"
-        android:layout_margin="10dp"
-        android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/titleIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleDescription"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="ISSUE :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_below="@id/txtIssue"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/notfoundimage"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txtIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtdescription"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/titleCreateTime"
+            android:textSize="15dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="11dp"/>
+
+        <TextView
+            android:id="@+id/titleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleIssue"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="IMAGE :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_below="@id/titleImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"/>
+    </RelativeLayout>
+
+</ScrollView>

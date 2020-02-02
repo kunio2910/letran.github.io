@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.adapter.TabsPagerAdapter;
@@ -25,6 +26,9 @@ public class ShowDetail_Activity extends AppCompatActivity implements ActionBar.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showdetail_activity);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Initiate();
     }
