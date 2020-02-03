@@ -73,6 +73,7 @@ public class ShowDevices_Fragment extends Fragment {
 
                 Intent intent = new Intent(getContext(),ShowDetail_Activity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("id", AppConfig.LST_DEVICES.get(position).getId());
                 bundle.putString("name", AppConfig.LST_DEVICES.get(position).getName());
                 bundle.putString("description", AppConfig.LST_DEVICES.get(position).getDescription());
                 bundle.putString("issue", AppConfig.LST_DEVICES.get(position).getIssue());

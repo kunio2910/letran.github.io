@@ -11,6 +11,7 @@ public class AppConfig {
     public static String DELETE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/delete_device.php";
     public static String UPDATE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/update_device.php";
     public static String GET_DEVICE_DETAILS = "https://letrantrong.000webhostapp.com/ManageDevices/devices/get_device_details.php";
+    public static String APPROVE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/approve_device.php";
 
     public static String GET_ALL_USERS = "https://letrantrong.000webhostapp.com/ManageDevices/users/get_all_users.php";
     public static String REGISTRATION = "https://letrantrong.000webhostapp.com/ManageDevices/users/registration.php";
@@ -32,6 +33,7 @@ public class AppConfig {
     public static String PERMISSION_DEFAULT = "1";
 
     public static String NAME_USER;
+    public static String PERMISSION_USER;
     public static List<Device> LST_DEVICES = new ArrayList<>();
     public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();
 }

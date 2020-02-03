@@ -111,10 +111,12 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                         JSONObject json_data = jsonArray.getJSONObject(i);
                         String name_temp = json_data.getString("name");
                         String password_temp = json_data.getString("password");
+                        String permission_temp = json_data.getString("permission");
                         Log.e("info", "Login Response: " + response.toString());
                         if(name.equals(name_temp) && password.equals(password_temp)){
                             isCheckLogin = true;
                             AppConfig.NAME_USER = name;
+                            AppConfig.PERMISSION_USER = permission_temp;
                             break;
                         }
                     }

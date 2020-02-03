@@ -138,6 +138,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"/>
+
+        <Button
+            android:id="@+id/approve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="APPROVE"
+            android:layout_below="@id/image"
+            android:layout_centerHorizontal="true"
+            android:enabled="false"/>
     </RelativeLayout>
 
 </ScrollView>

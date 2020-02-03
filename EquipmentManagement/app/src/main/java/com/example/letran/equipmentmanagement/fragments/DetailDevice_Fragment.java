@@ -1,65 +1,80 @@
 package com.example.letran.equipmentmanagement.fragments;
 
-import android.graphics.Matrix;
-import android.graphics.PointF;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
+import com.example.letran.equipmentmanagement.utils.AppConfig;
+import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.views.Login_Activity;
+import com.example.letran.equipmentmanagement.views.MainActivity;
 import com.squareup.picasso.Picasso;
 
-public class DetailDevice_Fragment extends Fragment implements View.OnTouchListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    private static final String TAG = "Touch";
-    @SuppressWarnings("unused")
-    private static final float MIN_ZOOM = 1f,MAX_ZOOM = 1f;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-    // These matrices will be used to scale points of the image
-    Matrix matrix = new Matrix();
-    Matrix savedMatrix = new Matrix();
+public class DetailDevice_Fragment extends Fragment {
 
-    // The 3 states (events) which the user is trying to perform
-    static final int NONE = 0;
-    static final int DRAG = 1;
-    static final int ZOOM = 2;
-    int mode = NONE;
-
-    // these PointF objects are used to record the point(s) the user is touching
-    PointF start = new PointF();
-    PointF mid = new PointF();
-    float oldDist = 1f;
-
-    private String name,description,issue,url_image,create_time,approver;
-    private TextView txtname,txtcreate_time,txtdescription,txtissue,txturl_image;
+    private String name, description, issue, url_image, create_time, approver, id;
+    private TextView txtname, txtcreate_time, txtdescription, txtissue, txturl_image;
     private ImageView image;
+    private Button btnapprove;
+    private ProgressDialog pDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_showdetaildevice,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_showdetaildevice, container, false);
         Inititate(rootView);
         GetInfo();
         ShowDetailDevice();
         return rootView;
     }
 
-    private void Inititate(View view){
-        txtname = (TextView)view.findViewById(R.id.txtname);
-        txtcreate_time = (TextView)view.findViewById(R.id.txtcreatetime);
-        txtdescription = (TextView)view.findViewById(R.id.txtdescription);
-        txtissue = (TextView)view.findViewById(R.id.txtIssue);
-        image = (ImageView)view.findViewById(R.id.image);
+    private void Inititate(View view) {
+        txtname = (TextView) view.findViewById(R.id.txtname);
+        txtcreate_time = (TextView) view.findViewById(R.id.txtcreatetime);
+        txtdescription = (TextView) view.findViewById(R.id.txtdescription);
+        txtissue = (TextView) view.findViewById(R.id.txtIssue);
+        image = (ImageView) view.findViewById(R.id.image);
+        btnapprove = (Button) view.findViewById(R.id.approve);
+        pDialog = new ProgressDialog(getContext());
 
-        image.setOnTouchListener(this);
+        if(AppConfig.PERMISSION_USER.equals("1")) {
+            btnapprove.setEnabled(true);
+        }
+
+        btnapprove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CallApprove(approver, id);
+            }
+        });
     }
-    private void GetInfo(){
+
+    private void GetInfo() {
         Bundle bundle = getActivity().getIntent().getExtras();
+        id = bundle.getString("id");
         name = bundle.getString("name");
         description = bundle.getString("description");
         issue = bundle.getString("issue");
@@ -68,142 +83,66 @@ public class DetailDevice_Fragment extends Fragment implements View.OnTouchListe
         approver = bundle.getString("approver");
     }
 
-    private void ShowDetailDevice(){
+    private void ShowDetailDevice() {
         txtname.setText(name);
         txtcreate_time.setText(create_time);
         txtdescription.setText(description);
         txtissue.setText(issue);
 
-        if(!url_image.isEmpty()){
+        if (!url_image.isEmpty()) {
             Picasso.with(getContext()).load(String.valueOf(url_image)).into(image);
-        }else{
+        } else {
             image.setImageResource(R.drawable.notfoundimage);
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        ImageView view = (ImageView) v;
-        view.setScaleType(ImageView.ScaleType.MATRIX);
-        float scale;
+    private void CallApprove(final String approver,final String id){
+        // Tag used to cancel the request
+        String tag_string_req = "req_updatedevice";
 
-        dumpEvent(event);
-        // Handle touch events here...
+        pDialog.setMessage("Approve...");
+        showDialog();
 
-        switch (event.getAction() & MotionEvent.ACTION_MASK)
-        {
-            case MotionEvent.ACTION_DOWN:   // first finger down only
-                savedMatrix.set(matrix);
-                start.set(event.getX(), event.getY());
-                Log.d(TAG, "mode=DRAG"); // write to LogCat
-                mode = DRAG;
-                break;
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.APPROVE_DEVICE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            case MotionEvent.ACTION_UP: // first finger lifted
+                Log.e("info", "Login Response: " + response.toString());
+                hideDialog();
 
-            case MotionEvent.ACTION_POINTER_UP: // second finger lifted
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("infor", "Approve Error: " + error.getMessage());
+                Toast.makeText(getContext(),
+                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }){
+            @Override
+            public Map<String, String> getParams(){
+                Date currentTime = Calendar.getInstance().getTime();
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("approver", AppConfig.NAME_USER);
+                params.put("id", id);
 
-                mode = NONE;
-                Log.d(TAG, "mode=NONE");
-                break;
+                return params;
+            }
+        };
 
-            case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
-
-                oldDist = spacing(event);
-                Log.d(TAG, "oldDist=" + oldDist);
-                if (oldDist > 5f) {
-                    savedMatrix.set(matrix);
-                    midPoint(mid, event);
-                    mode = ZOOM;
-                    Log.d(TAG, "mode=ZOOM");
-                }
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-
-                if (mode == DRAG)
-                {
-                    matrix.set(savedMatrix);
-                    matrix.postTranslate(event.getX() - start.x, event.getY() - start.y); // create the transformation in the matrix  of points
-                }
-                else if (mode == ZOOM)
-                {
-                    // pinch zooming
-                    float newDist = spacing(event);
-                    Log.d(TAG, "newDist=" + newDist);
-                    if (newDist > 5f)
-                    {
-                        matrix.set(savedMatrix);
-                        scale = newDist / oldDist; // setting the scaling of the
-                        // matrix...if scale > 1 means
-                        // zoom in...if scale < 1 means
-                        // zoom out
-                        matrix.postScale(scale, scale, mid.x, mid.y);
-                    }
-                }
-                break;
-        }
-
-        view.setImageMatrix(matrix); // display the transformation on screen
-
-        return true; // indicate event was handled
+        // Adding request to request queue
+        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
     }
 
-    /*
-     * --------------------------------------------------------------------------
-     * Method: spacing Parameters: MotionEvent Returns: float Description:
-     * checks the spacing between the two fingers on touch
-     * ----------------------------------------------------
-     */
-
-    private float spacing(MotionEvent event)
-    {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return (float) Math.sqrt(x * x + y * y);
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
     }
 
-    /*
-     * --------------------------------------------------------------------------
-     * Method: midPoint Parameters: PointF object, MotionEvent Returns: void
-     * Description: calculates the midpoint between the two fingers
-     * ------------------------------------------------------------
-     */
-
-    private void midPoint(PointF point, MotionEvent event)
-    {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
-    }
-
-    /** Show an event in the LogCat view, for debugging */
-    private void dumpEvent(MotionEvent event)
-    {
-        String names[] = { "DOWN", "UP", "MOVE", "CANCEL", "OUTSIDE","POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
-        StringBuilder sb = new StringBuilder();
-        int action = event.getAction();
-        int actionCode = action & MotionEvent.ACTION_MASK;
-        sb.append("event ACTION_").append(names[actionCode]);
-
-        if (actionCode == MotionEvent.ACTION_POINTER_DOWN || actionCode == MotionEvent.ACTION_POINTER_UP)
-        {
-            sb.append("(pid ").append(action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
-            sb.append(")");
-        }
-
-        sb.append("[");
-        for (int i = 0; i < event.getPointerCount(); i++)
-        {
-            sb.append("#").append(i);
-            sb.append("(pid ").append(event.getPointerId(i));
-            sb.append(")=").append((int) event.getX(i));
-            sb.append(",").append((int) event.getY(i));
-            if (i + 1 < event.getPointerCount())
-                sb.append(";");
-        }
-
-        sb.append("]");
-        Log.d("Touch Events ---------", sb.toString());
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 }
