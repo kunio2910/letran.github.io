@@ -12,17 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ShowDetail_Activity">
+        <activity android:name=".views.Login_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.MainActivity"/>
+        <activity android:name=".views.ShowDetail_Activity"/>
         <activity android:name=".views.Registration_Activity"/>
         <activity android:name=".views.InputDevices_Activity"/>
-        <activity android:name=".views.Login_Activity"/>
+        <activity android:name=".views.MainActivity"/>
     </application>
 
 </manifest>

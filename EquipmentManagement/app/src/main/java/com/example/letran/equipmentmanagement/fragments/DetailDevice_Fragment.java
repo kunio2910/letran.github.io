@@ -2,19 +2,22 @@ package com.example.letran.equipmentmanagement.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,62 +25,72 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
-import com.example.letran.equipmentmanagement.views.Login_Activity;
-import com.example.letran.equipmentmanagement.views.MainActivity;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Calendar;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 public class DetailDevice_Fragment extends Fragment implements View.OnClickListener {
 
-    private String name, description, issue, url_image, create_time, approver, id;
-    private TextView txtname, txtcreate_time, txtdescription, txtissue, txturl_image;
+    private String name_device, description, issue, url_image, create_time, approver, id, name_temp, description_temp, issue_temp;
+    private EditText edtname, edtcreate_time, edtdescription, edtissue;
+    private TextView txturl_image,txtnote;
     private ImageView image;
-    private Button btnapprove, btnchange, btndelete;
+    private Button btnapprove, btnchange, btndelete, btnchoseimage;
     private ProgressDialog pDialog;
+    private String image_encode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_showdetaildevice, container, false);
-        Inititate(rootView);
         GetInfo();
+        Inititate(rootView);
         ShowDetailDevice();
         return rootView;
     }
 
     private void Inititate(View view) {
-        txtname = (TextView) view.findViewById(R.id.txtname);
-        txtcreate_time = (TextView) view.findViewById(R.id.txtcreatetime);
-        txtdescription = (TextView) view.findViewById(R.id.txtdescription);
-        txtissue = (TextView) view.findViewById(R.id.txtIssue);
+        edtname = (EditText) view.findViewById(R.id.txtname);
+        edtcreate_time = (EditText) view.findViewById(R.id.txtcreatetime);
+        edtdescription = (EditText) view.findViewById(R.id.txtdescription);
+        edtissue = (EditText) view.findViewById(R.id.txtIssue);
         image = (ImageView) view.findViewById(R.id.image);
         btnapprove = (Button) view.findViewById(R.id.btnapprove);
         btnchange = (Button) view.findViewById(R.id.btnchange);
         btndelete = (Button) view.findViewById(R.id.btndelete);
-        pDialog = new ProgressDialog(getContext());
+        btnchoseimage = (Button) view.findViewById(R.id.btnChooseImage);
+        txtnote = (TextView)view.findViewById(R.id.note);
 
+        pDialog = new ProgressDialog(getContext());
+        txtnote.setVisibility(View.INVISIBLE);
+        btnchoseimage.setVisibility(View.INVISIBLE);
+
+        image_encode = "";
         //if (AppConfig.PERMISSION_USER.equals("1")) {
             btnapprove.setEnabled(true);
-            btnchange.setEnabled(true);
             btndelete.setEnabled(true);
         //}
+
+        if(approver.isEmpty())
+            btnchange.setEnabled(true);
 
         btnapprove.setOnClickListener(this);
         btnchange.setOnClickListener(this);
         btndelete.setOnClickListener(this);
+        btnchoseimage.setOnClickListener(this);
     }
 
     private void GetInfo() {
         Bundle bundle = getActivity().getIntent().getExtras();
         id = bundle.getString("id");
-        name = bundle.getString("name");
+        name_device = bundle.getString("name");
         description = bundle.getString("description");
         issue = bundle.getString("issue");
         url_image = bundle.getString("url_image");
@@ -86,10 +99,10 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     }
 
     private void ShowDetailDevice() {
-        txtname.setText(name);
-        txtcreate_time.setText(create_time);
-        txtdescription.setText(description);
-        txtissue.setText(issue);
+        edtname.setHint(name_device);
+        edtcreate_time.setHint(create_time);
+        edtdescription.setHint(description);
+        edtissue.setHint(issue);
 
         if (!url_image.isEmpty()) {
             Picasso.with(getContext()).load(String.valueOf(url_image)).into(image);
@@ -105,13 +118,72 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 CallApprove(approver, id);
                 break;
             case R.id.btnchange:
-                CallChangeInfor(id, name, description, issue, url_image, create_time, approver);
+                if(btnchange.getText().equals("CHANGE")) {
+                    edtname.setEnabled(true);
+                    edtdescription.setEnabled(true);
+                    edtissue.setEnabled(true);
+                    btnchoseimage.setVisibility(View.VISIBLE);
+                    btnchange.setText("UPDATE");
+                }else if(btnchange.getText().equals("UPDATE")){
+                    btnchange.setText("CHANGE");
+                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+                    if(!image_encode.isEmpty())
+                        CallUpdateImage(AppConfig.NAME_USER,edtname.getText().toString(),image_encode);
+
+                    if(edtname.getText().toString().isEmpty())
+                         name_temp = name_device;
+                    else
+                        name_temp = edtname.getText().toString();
+
+                    if(edtdescription.getText().toString().isEmpty())
+                         description_temp = description;
+                    else
+                        description_temp = edtdescription.getText().toString();
+
+                    if(edtissue.getText().toString().isEmpty())
+                         issue_temp = issue;
+                    else
+                        issue_temp = edtissue.getText().toString();
+
+                    CallChangeInfor(id, name_temp, description_temp, issue_temp, url_image, currentDate, "");
+                }
                 break;
             case R.id.btndelete:
                 CallDelete(id);
                 break;
+            case R.id.btnChooseImage:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+                break;
             default:
                 break;
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+        {
+            Uri chosenImageUri = data.getData();
+
+            Bitmap mBitmap = null;
+            try {
+                mBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), chosenImageUri);
+                image.setImageBitmap(mBitmap);
+
+                BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                byte[] bb = bos.toByteArray();
+                String image = Base64.encodeToString(bb,0);
+                image_encode = image;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -141,8 +213,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }) {
             @Override
             public Map<String, String> getParams() {
-                Date currentTime = Calendar.getInstance().getTime();
-                // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("approver", AppConfig.NAME_USER);
                 params.put("id", id);
@@ -181,8 +251,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }) {
             @Override
             public Map<String, String> getParams() {
-                Date currentTime = Calendar.getInstance().getTime();
-                // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id);
 
@@ -199,16 +267,22 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         // Tag used to cancel the request
         String tag_string_req = "req_updatedevice";
 
-        pDialog.setMessage("Approve...");
+        pDialog.setMessage("Update Infor...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.DELETE_DEVICE, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.UPDATE_DEVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 Log.e("info", "Login Response: " + response.toString());
                 hideDialog();
-
+                edtname.setEnabled(false);
+                edtdescription.setEnabled(false);
+                edtissue.setEnabled(false);
+                edtcreate_time.setText(create_time);
+                btnchange.setEnabled(false);
+                btnchoseimage.setVisibility(View.INVISIBLE);
+                txtnote.setVisibility(View.VISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -221,8 +295,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }) {
             @Override
             public Map<String, String> getParams() {
-                Date currentTime = Calendar.getInstance().getTime();
-                // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id);
                 params.put("name", name);
@@ -231,6 +303,40 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("url_image", url_image);
                 params.put("create_time", create_time);
                 params.put("approver", approver);
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void CallUpdateImage(final String name_user,final String name_image, final String image) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_updateimage";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.CREATE_IMAGE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("info", "Update Response: " + response.toString());
+                image_encode = "";
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("infor", "Approve Error: " + error.getMessage());
+                Toast.makeText(getContext(),
+                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            public Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name_user", name_user);
+                params.put("name_image", name_image);
+                params.put("image", image);
 
                 return params;
             }

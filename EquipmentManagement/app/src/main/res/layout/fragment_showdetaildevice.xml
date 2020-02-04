@@ -31,16 +31,19 @@
             android:textSize="15dp"
             android:textStyle="bold"/>
 
-        <TextView
+        <EditText
             android:id="@+id/txtname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/titleName"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="11dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/titleCreateTime"
@@ -54,18 +57,19 @@
             android:textSize="15dp"
             android:textStyle="bold"/>
 
-        <TextView
+        <EditText
             android:id="@+id/txtcreatetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtname"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/titleCreateTime"
+            android:textSize="15dp"
             android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="8dp"
-            android:autoSizeMaxTextSize="15dp" />
+            android:autoSizeMinTextSize="11dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/titleDescription"
@@ -79,18 +83,19 @@
             android:textSize="15dp"
             android:textStyle="bold"/>
 
-        <TextView
+        <EditText
             android:id="@+id/txtdescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtcreatetime"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/titleCreateTime"
             android:textSize="15dp"
             android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="11dp"/>
+            android:autoSizeMinTextSize="11dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/titleIssue"
@@ -104,18 +109,20 @@
             android:textSize="15dp"
             android:textStyle="bold"/>
 
-        <TextView
+        <EditText
             android:id="@+id/txtIssue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtdescription"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@+id/titleCreateTime"
             android:textSize="15dp"
             android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="11dp"/>
+            android:autoSizeMinTextSize="11dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/titleImage"
@@ -129,22 +136,45 @@
             android:textSize="15dp"
             android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/btnChooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chose Image :"
+            android:textSize="15dp"
+            android:layout_below="@+id/titleImage"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/input_login"
+            android:visibility="invisible"/>
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="400dp"
             android:layout_height="300dp"
-            android:layout_below="@id/titleImage"
+            android:layout_below="@id/btnChooseImage"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:text="* The image is pending moderation"
+            android:layout_below="@id/image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/Red"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/btnchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CHANGE"
-            android:layout_below="@id/image"
+            android:layout_below="@id/note"
             android:layout_toLeftOf="@+id/btnapprove"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="30dp"
@@ -155,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="APPROVE"
-            android:layout_below="@id/image"
+            android:layout_below="@id/note"
             android:layout_centerHorizontal="true"
             android:enabled="false"/>
 
@@ -164,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DELETE"
-            android:layout_below="@id/image"
+            android:layout_below="@id/note"
             android:layout_toRightOf="@+id/btnapprove"
             android:enabled="false"
             android:layout_marginLeft="30dp"/>

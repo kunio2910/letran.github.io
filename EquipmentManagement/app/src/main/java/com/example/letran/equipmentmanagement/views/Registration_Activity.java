@@ -26,9 +26,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -174,13 +176,13 @@ public class Registration_Activity extends Activity implements View.OnClickListe
         }){
             @Override
             public Map<String, String> getParams(){
-                Date currentTime = Calendar.getInstance().getTime();
+                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
                 params.put("password", password);
                 params.put("permission", "0");
-                params.put("create_time", String.valueOf(currentTime));
+                params.put("create_time", String.valueOf(currentDate));
 
                 return params;
             }
