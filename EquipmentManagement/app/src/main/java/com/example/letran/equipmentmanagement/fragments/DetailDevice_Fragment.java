@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,12 +35,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailDevice_Fragment extends Fragment {
+public class DetailDevice_Fragment extends Fragment implements View.OnClickListener {
 
     private String name, description, issue, url_image, create_time, approver, id;
     private TextView txtname, txtcreate_time, txtdescription, txtissue, txturl_image;
     private ImageView image;
-    private Button btnapprove;
+    private Button btnapprove, btnchange, btndelete;
     private ProgressDialog pDialog;
 
     @Override
@@ -57,19 +58,20 @@ public class DetailDevice_Fragment extends Fragment {
         txtdescription = (TextView) view.findViewById(R.id.txtdescription);
         txtissue = (TextView) view.findViewById(R.id.txtIssue);
         image = (ImageView) view.findViewById(R.id.image);
-        btnapprove = (Button) view.findViewById(R.id.approve);
+        btnapprove = (Button) view.findViewById(R.id.btnapprove);
+        btnchange = (Button) view.findViewById(R.id.btnchange);
+        btndelete = (Button) view.findViewById(R.id.btndelete);
         pDialog = new ProgressDialog(getContext());
 
-        if(AppConfig.PERMISSION_USER.equals("1")) {
+        //if (AppConfig.PERMISSION_USER.equals("1")) {
             btnapprove.setEnabled(true);
-        }
+            btnchange.setEnabled(true);
+            btndelete.setEnabled(true);
+        //}
 
-        btnapprove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CallApprove(approver, id);
-            }
-        });
+        btnapprove.setOnClickListener(this);
+        btnchange.setOnClickListener(this);
+        btndelete.setOnClickListener(this);
     }
 
     private void GetInfo() {
@@ -96,7 +98,24 @@ public class DetailDevice_Fragment extends Fragment {
         }
     }
 
-    private void CallApprove(final String approver,final String id){
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnapprove:
+                CallApprove(approver, id);
+                break;
+            case R.id.btnchange:
+                CallChangeInfor(id, name, description, issue, url_image, create_time, approver);
+                break;
+            case R.id.btndelete:
+                CallDelete(id);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void CallApprove(final String approver, final String id) {
         // Tag used to cancel the request
         String tag_string_req = "req_updatedevice";
 
@@ -119,14 +138,99 @@ public class DetailDevice_Fragment extends Fragment {
                         "Please click approve again ...", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
-        }){
+        }) {
             @Override
-            public Map<String, String> getParams(){
+            public Map<String, String> getParams() {
                 Date currentTime = Calendar.getInstance().getTime();
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("approver", AppConfig.NAME_USER);
                 params.put("id", id);
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void CallDelete(final String id) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_updatedevice";
+
+        pDialog.setMessage("Approve...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.DELETE_DEVICE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("info", "Login Response: " + response.toString());
+                hideDialog();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("infor", "Approve Error: " + error.getMessage());
+                Toast.makeText(getContext(),
+                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            public Map<String, String> getParams() {
+                Date currentTime = Calendar.getInstance().getTime();
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
+    }
+
+
+    private void CallChangeInfor(final String id, final String name, final String description, final String issue, final String url_image, final String create_time, final String approver) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_updatedevice";
+
+        pDialog.setMessage("Approve...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.DELETE_DEVICE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("info", "Login Response: " + response.toString());
+                hideDialog();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("infor", "Approve Error: " + error.getMessage());
+                Toast.makeText(getContext(),
+                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            public Map<String, String> getParams() {
+                Date currentTime = Calendar.getInstance().getTime();
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+                params.put("name", name);
+                params.put("description", description);
+                params.put("issue", issue);
+                params.put("url_image", url_image);
+                params.put("create_time", create_time);
+                params.put("approver", approver);
 
                 return params;
             }
@@ -145,4 +249,6 @@ public class DetailDevice_Fragment extends Fragment {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+
 }
