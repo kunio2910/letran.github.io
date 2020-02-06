@@ -3,9 +3,11 @@ package com.example.letran.equipmentmanagement.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -25,6 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.views.Login_Activity;
+import com.example.letran.equipmentmanagement.views.MainActivity;
+import com.example.letran.equipmentmanagement.views.Registration_Activity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -42,7 +47,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     private String name_device, description, issue, url_image, create_time, approver, id, name_temp, description_temp, issue_temp;
     private EditText edtname, edtcreate_time, edtdescription, edtissue;
     private TextView txturl_image,txtnote;
-    private ImageView image;
+    private ImageView imageview;
     private Button btnapprove, btnchange, btndelete, btnchoseimage;
     private ProgressDialog pDialog;
     private String image_encode;
@@ -50,7 +55,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_showdetaildevice, container, false);
-        GetInfo();
+        GetInfor();
         Inititate(rootView);
         ShowDetailDevice();
         return rootView;
@@ -61,7 +66,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         edtcreate_time = (EditText) view.findViewById(R.id.txtcreatetime);
         edtdescription = (EditText) view.findViewById(R.id.txtdescription);
         edtissue = (EditText) view.findViewById(R.id.txtIssue);
-        image = (ImageView) view.findViewById(R.id.image);
+        imageview = (ImageView) view.findViewById(R.id.image);
         btnapprove = (Button) view.findViewById(R.id.btnapprove);
         btnchange = (Button) view.findViewById(R.id.btnchange);
         btndelete = (Button) view.findViewById(R.id.btndelete);
@@ -87,7 +92,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         btnchoseimage.setOnClickListener(this);
     }
 
-    private void GetInfo() {
+    private void GetInfor() {
         Bundle bundle = getActivity().getIntent().getExtras();
         id = bundle.getString("id");
         name_device = bundle.getString("name");
@@ -105,9 +110,16 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         edtissue.setHint(issue);
 
         if (!url_image.isEmpty()) {
-            Picasso.with(getContext()).load(String.valueOf(url_image)).into(image);
+            //Picasso.with(getContext()).load(String.valueOf(url_image)).into(image);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] imageBytes = baos.toByteArray();
+            //decode base64 string to image
+            imageBytes = Base64.decode(url_image, Base64.DEFAULT);
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
+            imageview.setImageBitmap(bMap);
         } else {
-            image.setImageResource(R.drawable.notfoundimage);
+            imageview.setImageResource(R.drawable.notfoundimage);
         }
     }
 
@@ -128,8 +140,8 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                     btnchange.setText("CHANGE");
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-                    if(!image_encode.isEmpty())
-                        CallUpdateImage(AppConfig.NAME_USER,edtname.getText().toString(),image_encode);
+                    //if(!image_encode.isEmpty())
+                        //CallUpdateImage(AppConfig.NAME_USER,edtname.getText().toString(),image_encode);
 
                     if(edtname.getText().toString().isEmpty())
                          name_temp = name_device;
@@ -146,7 +158,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                     else
                         issue_temp = edtissue.getText().toString();
 
-                    CallChangeInfor(id, name_temp, description_temp, issue_temp, url_image, currentDate, "");
+                    CallChangeInfor(id, name_temp, description_temp, issue_temp, image_encode, currentDate, "");
                 }
                 break;
             case R.id.btndelete:
@@ -172,12 +184,12 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             Bitmap mBitmap = null;
             try {
                 mBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), chosenImageUri);
-                image.setImageBitmap(mBitmap);
+                imageview.setImageBitmap(mBitmap);
 
-                BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
+                BitmapDrawable drawable = (BitmapDrawable) imageview.getDrawable();
                 Bitmap bitmap = drawable.getBitmap();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,10,bos);
                 byte[] bb = bos.toByteArray();
                 String image = Base64.encodeToString(bb,0);
                 image_encode = image;
@@ -275,14 +287,37 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             public void onResponse(String response) {
 
                 Log.e("info", "Login Response: " + response.toString());
-                hideDialog();
+
+
+                image_encode = "";
                 edtname.setEnabled(false);
                 edtdescription.setEnabled(false);
                 edtissue.setEnabled(false);
                 edtcreate_time.setText(create_time);
                 btnchange.setEnabled(false);
                 btnchoseimage.setVisibility(View.INVISIBLE);
-                txtnote.setVisibility(View.VISIBLE);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] imageBytes = baos.toByteArray();
+
+                //decode base64 string to image
+                imageBytes = Base64.decode(url_image, Base64.DEFAULT);
+                Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
+                imageview.setImageBitmap(bMap);
+                //txtnote.setVisibility(View.VISIBLE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppConfig.FLAG = 1;
+                        hideDialog();
+                        Intent intent = new Intent(getContext(),MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                }, 1000);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -320,7 +355,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(String response) {
                 Log.e("info", "Update Response: " + response.toString());
-                image_encode = "";
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -356,5 +391,9 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             pDialog.dismiss();
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        AppConfig.FLAG = 1;
+    }
 }

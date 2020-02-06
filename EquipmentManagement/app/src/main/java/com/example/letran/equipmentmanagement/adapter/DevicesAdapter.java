@@ -1,8 +1,12 @@
 package com.example.letran.equipmentmanagement.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +15,10 @@ import android.widget.TextView;
 
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.models.Device;
+import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHolder> {
@@ -38,10 +44,43 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         holder.txtdot.setText(Html.fromHtml("&#8226;"));
 
         if(!device.getUrl_image().isEmpty()){
-            Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
+            //Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] imageBytes = baos.toByteArray();
+            //decode base64 string to image
+            imageBytes = Base64.decode(AppConfig.LST_DEVICES.get(position).getUrl_image(), Base64.DEFAULT);
+            //BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inSampleSize = calculateInSampleSize(options, 400,300);
+            //options.inJustDecodeBounds = false;
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
+            holder.imageView.setImageBitmap(bMap);
         }else{
             holder.imageView.setImageResource(R.drawable.notfoundimage);
         }
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
     @Override

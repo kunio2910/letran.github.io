@@ -49,12 +49,13 @@ public class ShowDevices_Fragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_alldevices,container,false);
         Initiate(rootView);
         context = container.getContext();
-        pDialog = new ProgressDialog(container.getContext());
-        context = container.getContext();
         return rootView;
     }
 
     private void Initiate(View view){
+        AppConfig.LST_DEVICES.clear();
+        AppConfig.FLAG = 0;
+        pDialog = new ProgressDialog(view.getContext());
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
 
@@ -137,6 +138,7 @@ public class ShowDevices_Fragment extends Fragment {
                             //Adding RecyclerView Divider / Separator
                             recyclerView.addItemDecoration(new MyDividerItemDecoration(context,LinearLayoutManager.VERTICAL,16));
                             recyclerView.setAdapter(mAdapter);
+                            AppConfig.FLAG = 1;
                         }
                     }
                 } catch (JSONException e) {
@@ -173,12 +175,21 @@ public class ShowDevices_Fragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        AppConfig.LST_DEVICES.clear();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        GetAllDevices(context);
+        if (AppConfig.LST_DEVICES.size() >= 1 && AppConfig.FLAG == 1) {
+            mAdapter = new DevicesAdapter(AppConfig.LST_DEVICES, context);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            //Adding RecyclerView Divider / Separator
+            recyclerView.addItemDecoration(new MyDividerItemDecoration(context,LinearLayoutManager.VERTICAL,16));
+            recyclerView.setAdapter(mAdapter);
+        }else if(AppConfig.FLAG == 0) {
+            GetAllDevices(context);
+        }
     }
 }

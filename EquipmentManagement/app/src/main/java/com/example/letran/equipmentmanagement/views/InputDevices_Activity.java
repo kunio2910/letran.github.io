@@ -74,8 +74,7 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 String issue = edtIssue.getText().toString().trim();
 
                 if (!name.isEmpty() && !description.isEmpty() && !issue.isEmpty()) {
-                    AddImage(AppConfig.NAME_USER,name,image_encode);
-                    AddDevice(name,description,issue);
+                    AddDevice(name,description,issue,image_encode);
                     btnAdd.setEnabled(false);
                 } else {
                     Toast.makeText(getApplicationContext(),
@@ -106,7 +105,7 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 Bitmap bitmap = drawable.getBitmap();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,10,bos);
                 byte[] bb = bos.toByteArray();
                 String image = Base64.encodeToString(bb,0);
                 image_encode = image;
@@ -115,7 +114,7 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
             }
         }
     }
-    private void AddDevice(final String name,final String description,final String issue){
+    private void AddDevice(final String name,final String description,final String issue,final String url_image){
         // Tag used to cancel the request
         String tag_string_req = "req_createdevice";
 
@@ -127,14 +126,14 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
             public void onResponse(String response) {
                 hideDialog();
                 Toast.makeText(InputDevices_Activity.this,"Create Data Completed !",Toast.LENGTH_LONG).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Magic here
-                        Intent intent = new Intent(InputDevices_Activity.this,MainActivity.class);
-                        startActivity(intent);
-                    }
-                }, 3000);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Magic here
+//                        Intent intent = new Intent(InputDevices_Activity.this,MainActivity.class);
+//                        startActivity(intent);
+//                    }
+//                }, 3000);
 
 
             }
@@ -157,48 +156,10 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 params.put("name", name);
                 params.put("description", description);
                 params.put("issue", issue);
-                params.put("url_image", "");
+                params.put("url_image", url_image);
                 //params.put("create_time", String.valueOf(currentTime));
                 params.put("create_time", currentDate);
                 params.put("approver", "");
-
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        AppController.getInstance(this).addToRequestQueue(strReq, tag_string_req);
-    }
-
-    private void AddImage(final String name_user,final String name,final String image){
-        // Tag used to cancel the request
-        String tag_string_req = "req_createdevice";
-
-        //pDialog.setMessage("POST DATA ...");
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.CREATE_IMAGE, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //hideDialog();
-                //Toast.makeText(InputDevices_Activity.this,"Create Image Completed !",Toast.LENGTH_LONG).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("infor", "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        "Please post again ...", Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }){
-            @Override
-            public Map<String, String> getParams(){
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name_user", name_user);
-                params.put("name_image", name);
-                params.put("image", image_encode);
 
                 return params;
             }
@@ -216,5 +177,11 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppConfig.FLAG = 1;
     }
 }
