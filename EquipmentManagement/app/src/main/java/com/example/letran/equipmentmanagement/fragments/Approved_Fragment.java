@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class Approved_Fragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -46,6 +48,7 @@ public class Approved_Fragment extends Fragment {
     }
 
     private void Initiate(View view){
+        AppConfig.LST_DEVICES_APPROVED.clear();
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
     }
 
@@ -79,11 +82,11 @@ public class Approved_Fragment extends Fragment {
                             device.setUrl_image(json_data.getString("url_image"));
                             device.setCreate_time(json_data.getString("create_time"));
                             device.setApprover(json_data.getString("approver"));
+                            device.setCreater(json_data.getString("creater"));
                             Log.e("info", "Login Response: " + response.toString());
 
                             if(!device.getApprover().isEmpty())
                                 AppConfig.LST_DEVICES_APPROVED.add(device);
-                            Log.e("test","test");
                         }
 
                         //Dua data vao recycleview
@@ -129,14 +132,18 @@ public class Approved_Fragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        AppConfig.LST_DEVICES_APPROVED.clear();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        GetAllDevicesApproved(context);
+        if (AppConfig.LST_DEVICES_APPROVED.size() >= 1 && AppConfig.FLAG == 1) {
+            mAdapter = new DevicesAdapter(AppConfig.LST_DEVICES_APPROVED, context);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            //Adding RecyclerView Divider / Separator
+            recyclerView.addItemDecoration(new MyDividerItemDecoration(context,LinearLayoutManager.VERTICAL,16));
+            recyclerView.setAdapter(mAdapter);
+        }else if(AppConfig.FLAG == 0) {
+            GetAllDevicesApproved(context);
+        }
     }
 }

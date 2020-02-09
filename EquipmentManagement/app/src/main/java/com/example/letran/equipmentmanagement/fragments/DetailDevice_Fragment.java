@@ -44,8 +44,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class DetailDevice_Fragment extends Fragment implements View.OnClickListener {
 
-    private String name_device, description, issue, url_image, create_time, approver, id, name_temp, description_temp, issue_temp;
-    private EditText edtname, edtcreate_time, edtdescription, edtissue;
+    private String name_device, description, issue, url_image, create_time, approver,creater, id, name_temp, description_temp, issue_temp;
+    private EditText edtname, edtcreate_time, edtdescription, edtissue, edtcreater;
     private TextView txturl_image,txtnote;
     private ImageView imageview;
     private Button btnapprove, btnchange, btndelete, btnchoseimage;
@@ -62,10 +62,12 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     }
 
     private void Inititate(View view) {
+        AppConfig.FLAG = 1;
         edtname = (EditText) view.findViewById(R.id.txtname);
         edtcreate_time = (EditText) view.findViewById(R.id.txtcreatetime);
         edtdescription = (EditText) view.findViewById(R.id.txtdescription);
         edtissue = (EditText) view.findViewById(R.id.txtIssue);
+        edtcreater = (EditText) view.findViewById(R.id.txtCreater);
         imageview = (ImageView) view.findViewById(R.id.image);
         btnapprove = (Button) view.findViewById(R.id.btnapprove);
         btnchange = (Button) view.findViewById(R.id.btnchange);
@@ -78,12 +80,17 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         btnchoseimage.setVisibility(View.INVISIBLE);
 
         image_encode = "";
-        //if (AppConfig.PERMISSION_USER.equals("1")) {
-            btnapprove.setEnabled(true);
-            btndelete.setEnabled(true);
-        //}
 
-        if(approver.isEmpty())
+        if (AppConfig.NAME_USER.equals(creater)) {
+            btndelete.setEnabled(true);
+        }
+
+        if(AppConfig.PERMISSION_USER.equals("1") && approver.isEmpty()){
+            btnapprove.setEnabled(true);
+        }
+
+        //device duoc approve se khong duoc change
+        if(approver.isEmpty() && AppConfig.NAME_USER.equals(creater))
             btnchange.setEnabled(true);
 
         btnapprove.setOnClickListener(this);
@@ -101,6 +108,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         url_image = bundle.getString("url_image");
         create_time = bundle.getString("create_time");
         approver = bundle.getString("approver");
+        creater = bundle.getString("creater");
     }
 
     private void ShowDetailDevice() {
@@ -108,6 +116,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         edtcreate_time.setHint(create_time);
         edtdescription.setHint(description);
         edtissue.setHint(issue);
+        edtcreater.setHint(creater);
 
         if (!url_image.isEmpty()) {
             //Picasso.with(getContext()).load(String.valueOf(url_image)).into(image);
@@ -116,7 +125,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             //decode base64 string to image
             imageBytes = Base64.decode(url_image, Base64.DEFAULT);
             Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
+            Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 1200, 900, true);
             imageview.setImageBitmap(bMap);
         } else {
             imageview.setImageResource(R.drawable.notfoundimage);
@@ -184,12 +193,13 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             Bitmap mBitmap = null;
             try {
                 mBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), chosenImageUri);
+                mBitmap = Bitmap.createScaledBitmap(mBitmap,1200,900,false);
                 imageview.setImageBitmap(mBitmap);
 
                 BitmapDrawable drawable = (BitmapDrawable) imageview.getDrawable();
                 Bitmap bitmap = drawable.getBitmap();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,10,bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,70,bos);
                 byte[] bb = bos.toByteArray();
                 String image = Base64.encodeToString(bb,0);
                 image_encode = image;
@@ -202,7 +212,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     private void CallApprove(final String approver, final String id) {
         // Tag used to cancel the request
         String tag_string_req = "req_updatedevice";
-
+        AppConfig.FLAG = 0;
         pDialog.setMessage("Approve...");
         showDialog();
 
@@ -212,6 +222,9 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
 
                 Log.e("info", "Login Response: " + response.toString());
                 hideDialog();
+                Intent intent = new Intent(getContext(),MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
 
             }
         }, new Response.ErrorListener() {
@@ -241,6 +254,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         // Tag used to cancel the request
         String tag_string_req = "req_updatedevice";
 
+        AppConfig.FLAG = 0;
         pDialog.setMessage("Approve...");
         showDialog();
 
@@ -250,6 +264,9 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
 
                 Log.e("info", "Login Response: " + response.toString());
                 hideDialog();
+                Intent intent = new Intent(getContext(),MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
 
             }
         }, new Response.ErrorListener() {
@@ -279,6 +296,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         // Tag used to cancel the request
         String tag_string_req = "req_updatedevice";
 
+        AppConfig.FLAG = 0;
         pDialog.setMessage("Update Infor...");
         showDialog();
 
@@ -314,6 +332,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                         hideDialog();
                         Intent intent = new Intent(getContext(),MainActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
 
                     }
                 }, 1000);

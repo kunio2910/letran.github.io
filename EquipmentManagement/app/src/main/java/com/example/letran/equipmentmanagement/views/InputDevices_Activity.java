@@ -100,12 +100,15 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
             Bitmap mBitmap = null;
             try {
                 mBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), chosenImageUri);
+                //resize bitmap
+                mBitmap = Bitmap.createScaledBitmap(mBitmap,1200,900,false);
                 imageView.setImageBitmap(mBitmap);
 
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 Bitmap bitmap = drawable.getBitmap();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,10,bos);
+                //resize encode
+                bitmap.compress(Bitmap.CompressFormat.JPEG,70,bos);
                 byte[] bb = bos.toByteArray();
                 String image = Base64.encodeToString(bb,0);
                 image_encode = image;
@@ -126,14 +129,15 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
             public void onResponse(String response) {
                 hideDialog();
                 Toast.makeText(InputDevices_Activity.this,"Create Data Completed !",Toast.LENGTH_LONG).show();
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        // Magic here
-//                        Intent intent = new Intent(InputDevices_Activity.this,MainActivity.class);
-//                        startActivity(intent);
-//                    }
-//                }, 3000);
+                AppConfig.FLAG = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        Intent intent = new Intent(InputDevices_Activity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                }, 1000);
 
 
             }
@@ -160,6 +164,7 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
                 //params.put("create_time", String.valueOf(currentTime));
                 params.put("create_time", currentDate);
                 params.put("approver", "");
+                params.put("creater", AppConfig.NAME_USER);
 
                 return params;
             }
@@ -180,8 +185,8 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
         AppConfig.FLAG = 1;
     }
 }

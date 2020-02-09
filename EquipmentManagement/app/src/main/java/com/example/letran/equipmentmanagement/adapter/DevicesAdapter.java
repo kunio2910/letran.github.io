@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.models.Device;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -41,14 +39,18 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         Device device = lstDevices.get(position);
         holder.txtname.setText(device.getName());
         holder.txtdate.setText(device.getCreate_time());
-        holder.txtdot.setText(Html.fromHtml("&#8226;"));
+        if(!AppConfig.LST_DEVICES.get(position).getApprover().isEmpty())
+            holder.imageDot.setImageResource(R.drawable.approved);
+        else
+            holder.imageDot.setImageResource(R.drawable.dot);
+
 
         if(!device.getUrl_image().isEmpty()){
             //Picasso.with(context).load(device.getUrl_image()).into(holder.imageView);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             byte[] imageBytes = baos.toByteArray();
             //decode base64 string to image
-            imageBytes = Base64.decode(AppConfig.LST_DEVICES.get(position).getUrl_image(), Base64.DEFAULT);
+            imageBytes = Base64.decode(lstDevices.get(position).getUrl_image(), Base64.DEFAULT);
             //BitmapFactory.Options options = new BitmapFactory.Options();
             //options.inSampleSize = calculateInSampleSize(options, 400,300);
             //options.inJustDecodeBounds = false;
@@ -89,14 +91,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtname,txtdate,txtdot;
-        private ImageView imageView;
+        public TextView txtname,txtdate;
+        private ImageView imageView,imageDot;
 
         public MyViewHolder(View view) {
             super(view);
             txtname = (TextView)view.findViewById(R.id.name);
             txtdate = (TextView)view.findViewById(R.id.date);
-            txtdot = (TextView)view.findViewById(R.id.dot);
+            imageDot = (ImageView)view.findViewById(R.id.dot);
             imageView = (ImageView)view.findViewById(R.id.image);
         }
     }

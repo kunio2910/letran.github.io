@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/titleName"
             android:textSize="15dp"
@@ -125,10 +125,37 @@
             android:enabled="false" />
 
         <TextView
-            android:id="@+id/titleImage"
+            android:id="@+id/titleCreater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titleIssue"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="CREATER :"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/txtCreater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleIssue"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/titleCreater"
+            android:textSize="15dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="11dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:enabled="false" />
+
+        <TextView
+            android:id="@+id/titleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleCreater"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"

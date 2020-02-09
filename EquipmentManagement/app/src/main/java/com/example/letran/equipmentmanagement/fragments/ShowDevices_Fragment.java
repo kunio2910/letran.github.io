@@ -70,8 +70,6 @@ public class ShowDevices_Fragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getContext(),ShowDetail_Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", AppConfig.LST_DEVICES.get(position).getId());
@@ -81,6 +79,7 @@ public class ShowDevices_Fragment extends Fragment {
                 bundle.putString("url_image", AppConfig.LST_DEVICES.get(position).getUrl_image());
                 bundle.putString("create_time", AppConfig.LST_DEVICES.get(position).getCreate_time());
                 bundle.putString("approver", AppConfig.LST_DEVICES.get(position).getApprover());
+                bundle.putString("creater", AppConfig.LST_DEVICES.get(position).getCreater());
 
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -123,9 +122,11 @@ public class ShowDevices_Fragment extends Fragment {
                             device.setUrl_image(json_data.getString("url_image"));
                             device.setCreate_time(json_data.getString("create_time"));
                             device.setApprover(json_data.getString("approver"));
+                            device.setCreater(json_data.getString("creater"));
                             Log.e("info", "Login Response: " + response.toString());
 
                             AppConfig.LST_DEVICES.add(device);
+
                             Log.e("test","test");
                         }
 
