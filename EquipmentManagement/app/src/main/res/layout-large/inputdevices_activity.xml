@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_login">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INPUT INFORMATION"
+        android:textColor="@color/white"
+        android:textSize="23dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="80dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DEVICE NAME :"
+        android:textSize="15dp"
+        android:layout_below="@+id/title"
+        android:layout_margin="20dp"
+        android:textColor="@color/input_login" />
+
+    <EditText
+        android:id="@+id/edtNameDevice"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/input_login"
+        android:textAlignment="center"
+        android:background="@color/white"
+        android:textSize="13dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION :"
+        android:textSize="15dp"
+        android:layout_below="@+id/edtNameDevice"
+        android:layout_margin="20dp"
+        android:textColor="@color/input_login" />
+
+    <EditText
+        android:id="@+id/edtDescription"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/edtNameDevice"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:textColor="@color/input_login"
+        android:textAlignment="center"
+        android:textSize="13dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ISSUE :"
+        android:textSize="15dp"
+        android:layout_below="@+id/edtDescription"
+        android:layout_margin="20dp"
+        android:textColor="@color/input_login" />
+
+    <EditText
+        android:id="@+id/edtIssue"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/edtDescription"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:textColor="@color/input_login"
+        android:textAlignment="center"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/btnChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chose Image :"
+        android:textSize="13dp"
+        android:layout_below="@+id/edtIssue"
+        android:layout_margin="20dp"
+        android:textColor="@color/input_login" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/edtIssue"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/notfoundimage"/>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="POST INFORMATION"
+        android:textSize="13dp"
+        android:layout_below="@+id/image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/input_login"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

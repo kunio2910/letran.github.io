@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         //Adding Tabs

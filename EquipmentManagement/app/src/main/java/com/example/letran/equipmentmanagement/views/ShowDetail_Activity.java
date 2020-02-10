@@ -1,6 +1,7 @@
 package com.example.letran.equipmentmanagement.views;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.letran.equipmentmanagement.R;
@@ -40,6 +43,7 @@ public class ShowDetail_Activity extends AppCompatActivity implements ActionBar.
 
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         //Adding Tabs

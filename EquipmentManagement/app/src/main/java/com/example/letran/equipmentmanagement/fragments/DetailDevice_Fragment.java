@@ -1,11 +1,14 @@
 package com.example.letran.equipmentmanagement.fragments;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -15,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +35,7 @@ import com.example.letran.equipmentmanagement.utils.AppController;
 import com.example.letran.equipmentmanagement.views.Login_Activity;
 import com.example.letran.equipmentmanagement.views.MainActivity;
 import com.example.letran.equipmentmanagement.views.Registration_Activity;
+import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -55,6 +61,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_showdetaildevice, container, false);
+
         GetInfor();
         Inititate(rootView);
         ShowDetailDevice();

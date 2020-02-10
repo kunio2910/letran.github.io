@@ -1,18 +1,23 @@
 package com.example.letran.equipmentmanagement.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.letran.equipmentmanagement.R;
+import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
 public class TreeDevice_Fragment extends Fragment implements View.OnClickListener {
 
@@ -23,6 +28,7 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_treedevice,container,false);
+
         GetInfor();
         Initiate(rootView);
         return rootView;
