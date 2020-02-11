@@ -166,7 +166,7 @@
         <Button
             android:id="@+id/btnChooseImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="Chose Image :"
             android:textSize="15dp"
             android:layout_below="@+id/titleImage"
