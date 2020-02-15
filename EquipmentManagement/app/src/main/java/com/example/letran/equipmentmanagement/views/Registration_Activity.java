@@ -2,12 +2,14 @@ package com.example.letran.equipmentmanagement.views;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,7 +36,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class Registration_Activity extends Activity implements View.OnClickListener {
+public class Registration_Activity extends DrawerLayout_Activity implements View.OnClickListener {
 
     private EditText inputName, inputPassword, inputPasswordAgain;
     private Button btnRegistration;
@@ -44,10 +46,15 @@ public class Registration_Activity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_activity);
+        //setContentView(R.layout.registration_activity);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+        mDrawer.addView(contentView, 0);
 
         Initiate();
         btnRegistration.setOnClickListener(this);

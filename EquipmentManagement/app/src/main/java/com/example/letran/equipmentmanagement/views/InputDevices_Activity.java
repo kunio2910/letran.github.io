@@ -2,6 +2,7 @@ package com.example.letran.equipmentmanagement.views;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +37,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class InputDevices_Activity extends Activity implements View.OnClickListener {
+public class InputDevices_Activity extends DrawerLayout_Activity implements View.OnClickListener {
 
     EditText edtNameDevice,edtDescription,edtIssue;
     Button btnAdd,btnChoseImage;
@@ -47,7 +49,14 @@ public class InputDevices_Activity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inputdevices_activity);
+//        setContentView(R.layout.inputdevices_activity);
+//
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+        mDrawer.addView(contentView, 0);
+
         Initiate();
     }
 
