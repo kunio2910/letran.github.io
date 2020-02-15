@@ -33,7 +33,10 @@ public class AppConfig {
     public static String PERMISSION_DEFAULT = "1";
 
     public static String NAME_USER;
+    public static String PASSWORD_USER;
     public static String PERMISSION_USER;
+    public static String ID_USER;
+    public static String CREATE_TIME_USER;
     public static int FLAG = 0;
     public static List<Device> LST_DEVICES = new ArrayList<>();
     public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();

@@ -54,6 +54,10 @@ public class Login_Activity extends Activity implements View.OnClickListener {
 
     private void Initiate(){
         AppConfig.NAME_USER = "";
+        AppConfig.PASSWORD_USER = "";
+        AppConfig.PERMISSION_USER = "";
+        AppConfig.ID_USER = "";
+
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegistration = (Button)findViewById(R.id.btnLinkToRegistrerScreen);
 
@@ -110,14 +114,19 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                     JSONArray jsonArray = jObj.getJSONArray("users");
                     for(int i = 0; i < jsonArray.length(); i++){
                         JSONObject json_data = jsonArray.getJSONObject(i);
+                        String id_temp = json_data.getString("id");
                         String name_temp = json_data.getString("name");
                         String password_temp = json_data.getString("password");
                         String permission_temp = json_data.getString("permission");
+                        String create_time_temp = json_data.getString("create_time");
                         Log.e("info", "Login Response: " + response.toString());
                         if(name.equals(name_temp) && password.equals(password_temp)){
                             isCheckLogin = true;
                             AppConfig.NAME_USER = name;
                             AppConfig.PERMISSION_USER = permission_temp;
+                            AppConfig.PASSWORD_USER = password;
+                            AppConfig.ID_USER = id_temp;
+                            AppConfig.CREATE_TIME_USER = create_time_temp;
                             break;
                         }
                     }

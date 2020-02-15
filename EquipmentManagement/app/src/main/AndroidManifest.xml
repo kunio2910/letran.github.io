@@ -23,6 +23,7 @@
         <activity android:name=".views.Registration_Activity"/>
         <activity android:name=".views.InputDevices_Activity"/>
         <activity android:name=".views.MainActivity"/>
+        <activity android:name=".views.Personal_Activity"/>
     </application>
 
 </manifest>
