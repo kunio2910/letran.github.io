@@ -1,9 +1,12 @@
 package com.example.letran.equipmentmanagement.views;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 
 import android.support.v4.view.GravityCompat;
@@ -40,11 +43,15 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        //Change color for actionbar
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#26ae90")));
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         drawerToggle = new ActionBarDrawerToggle(DrawerLayout_Activity.this, mDrawer, R.string.ns_menu_open, R.string.ns_menu_close);
         mDrawer.addDrawerListener(drawerToggle);
+        //calling sync state is compulsory to avoid unusual behaviour as home button wont show up
+        drawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -79,9 +86,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            Toast.makeText(this,"click",Toast.LENGTH_LONG).show();
-            finish();
+        if(drawerToggle.onOptionsItemSelected(item)) { //open and close navigation from icon toogle
+            return true;
         } else if (id == R.id.nav_home) {
             Intent intent = new Intent(DrawerLayout_Activity.this, MainActivity.class);
             startActivity(intent);

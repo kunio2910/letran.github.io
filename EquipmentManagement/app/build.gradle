@@ -29,4 +29,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
+    //create imageview circle
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

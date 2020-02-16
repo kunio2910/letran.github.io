@@ -49,9 +49,8 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
 
         actionBar = getSupportActionBar();
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-
         viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 

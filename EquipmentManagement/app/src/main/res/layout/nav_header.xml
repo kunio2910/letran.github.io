@@ -2,18 +2,28 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="200dp"
+    android:background="@drawable/background_nav_header">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imgAvatar"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/notfoundimage"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/white"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:padding="10dp"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:text="Header Nav"
-        android:textColor="@color/Red" />
+        android:layout_below="@+id/imgAvatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textStyle="italic|bold"
+        android:textSize="23dp"
+        android:text="Name"
+        android:textColor="@color/white" />
 </RelativeLayout>
