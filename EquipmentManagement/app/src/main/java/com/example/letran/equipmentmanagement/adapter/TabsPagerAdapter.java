@@ -7,30 +7,35 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.example.letran.equipmentmanagement.fragments.Approved_Fragment;
 import com.example.letran.equipmentmanagement.fragments.ShowDevices_Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabsPagerAdapter extends FragmentPagerAdapter {
+
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    @Override
-    public Fragment getItem(int index) {
-        switch (index) {
-            case 0:
-                // Top Rated fragment activity
-                return new ShowDevices_Fragment();
-            case 1:
-                // Games fragment activity
-                return new Approved_Fragment();
-            default:
-                break;
-        }
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
 
-        return null;
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return mFragmentList.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 }

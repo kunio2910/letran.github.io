@@ -1,11 +1,10 @@
 package com.example.letran.equipmentmanagement.fragments;
 
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -42,7 +41,6 @@ public class ShowDevices_Fragment extends Fragment {
     private DevicesAdapter mAdapter;
     private FloatingActionButton fab;
     private Context context;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {

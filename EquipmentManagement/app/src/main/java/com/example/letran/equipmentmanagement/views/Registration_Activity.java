@@ -53,7 +53,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
         LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+        View contentView = inflater.inflate(R.layout.registration_activity, null, false);
         mDrawer.addView(contentView, 0);
 
         Initiate();

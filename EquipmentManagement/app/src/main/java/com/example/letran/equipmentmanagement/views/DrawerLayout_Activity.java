@@ -3,12 +3,14 @@ package com.example.letran.equipmentmanagement.views;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +31,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
     private ActionBar actionBar;
     private ActionBarDrawerToggle drawerToggle;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,10 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         //Change color for actionbar
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#26ae90")));
+        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#26ae90")));
+
+        Drawable d=getResources().getDrawable(R.drawable.background_nav_header);
+        actionBar.setBackgroundDrawable(d);
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
