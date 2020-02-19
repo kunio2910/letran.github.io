@@ -1,31 +1,30 @@
 package com.example.letran.equipmentmanagement.views;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.letran.equipmentmanagement.R;
-import com.example.letran.equipmentmanagement.adapter.TabsPagerAdapter;
-import com.example.letran.equipmentmanagement.adapter.TabsPagerDetailDeviceAdapter;
+import com.example.letran.equipmentmanagement.fragments.DetailDevice_Fragment;
+import com.example.letran.equipmentmanagement.fragments.TreeDevice_Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShowDetail_Activity extends DrawerLayout_Activity implements ActionBar.TabListener {
 
     private ViewPager viewPager;
-    private ActionBar actionBar;
     private TabsPagerDetailDeviceAdapter mAdapter;
-    //Tab titles
-    private String[] tabs = {"Infor Device", "Tree Device"};
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,42 +43,29 @@ public class ShowDetail_Activity extends DrawerLayout_Activity implements Action
         Initiate();
     }
 
-    private void Initiate(){
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
-        actionBar = getSupportActionBar();
+    private void Initiate() {
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
         mAdapter = new TabsPagerDetailDeviceAdapter(getSupportFragmentManager());
-
         viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        tabLayout.setupWithViewPager(viewPager);
 
-        //Adding Tabs
-        for(String tab_name : tabs){
-            actionBar.addTab(actionBar.newTab().setText(tab_name).setTabListener(ShowDetail_Activity.this));
-        }
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
-                actionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        setupViewPager();
     }
 
+    private void setupViewPager() {
+        mAdapter = new TabsPagerDetailDeviceAdapter(getSupportFragmentManager());
+        mAdapter.addFragment(new DetailDevice_Fragment(), "DETAILS");
+        mAdapter.addFragment(new TreeDevice_Fragment(), "TREE");
+        viewPager.setAdapter(mAdapter);
 
+        setIcon();
+    }
+
+    private void setIcon() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.home_black_18dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.person_black_18dp);
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -96,5 +82,35 @@ public class ShowDetail_Activity extends DrawerLayout_Activity implements Action
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+    }
+
+    public class TabsPagerDetailDeviceAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public TabsPagerDetailDeviceAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

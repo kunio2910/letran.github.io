@@ -61,6 +61,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
     }
 
     private void Initiate(){
+        AppConfig.FLAG = 1;
         inputName = (EditText)findViewById(R.id.edtName);
         inputPassword = (EditText)findViewById(R.id.edtPassword);
         inputPasswordAgain = (EditText)findViewById(R.id.edtPassword_again);
@@ -159,6 +160,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.REGISTRATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                AppConfig.FLAG = 0;
                 hideDialog();
                 Toast.makeText(Registration_Activity.this,"Registration Completed !",Toast.LENGTH_LONG).show();
                 new Handler().postDelayed(new Runnable() {

@@ -39,7 +39,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         Device device = lstDevices.get(position);
         holder.txtname.setText(device.getName());
         holder.txtdate.setText(device.getCreate_time());
-        if(!AppConfig.LST_DEVICES.get(position).getApprover().isEmpty())
+        if(!lstDevices.get(position).getApprover().isEmpty())
             holder.imageDot.setImageResource(R.drawable.approved);
         else
             holder.imageDot.setImageResource(R.drawable.dot);
@@ -62,8 +62,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         }
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;

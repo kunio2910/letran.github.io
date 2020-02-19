@@ -37,7 +37,8 @@ public class AppConfig {
     public static String PERMISSION_USER;
     public static String ID_USER;
     public static String CREATE_TIME_USER;
-    public static int FLAG = 0;
+    public static int FLAG = 0; //0 update again, 1 get list current
     public static List<Device> LST_DEVICES = new ArrayList<>();
     public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();
+    public static List<Device> LST_DEVICES_WAIT_APPROVED = new ArrayList<>();
 }

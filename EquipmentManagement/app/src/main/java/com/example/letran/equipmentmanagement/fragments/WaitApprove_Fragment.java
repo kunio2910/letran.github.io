@@ -19,14 +19,14 @@ import com.example.letran.equipmentmanagement.utils.MyDividerItemDecoration;
 import com.example.letran.equipmentmanagement.utils.RecyclerTouchListener;
 import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
-public class Approved_Fragment extends Fragment {
+public class WaitApprove_Fragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DevicesAdapter mAdapter;
     private Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.waitapprove_fragment,container,false);
         Initiate(rootView);
         context = container.getContext();
@@ -41,14 +41,14 @@ public class Approved_Fragment extends Fragment {
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getContext(),ShowDetail_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("id", AppConfig.LST_DEVICES_APPROVED.get(position).getId());
-                bundle.putString("name", AppConfig.LST_DEVICES_APPROVED.get(position).getName());
-                bundle.putString("description", AppConfig.LST_DEVICES_APPROVED.get(position).getDescription());
-                bundle.putString("issue", AppConfig.LST_DEVICES_APPROVED.get(position).getIssue());
-                bundle.putString("url_image", AppConfig.LST_DEVICES_APPROVED.get(position).getUrl_image());
-                bundle.putString("create_time", AppConfig.LST_DEVICES_APPROVED.get(position).getCreate_time());
-                bundle.putString("approver", AppConfig.LST_DEVICES_APPROVED.get(position).getApprover());
-                bundle.putString("creater", AppConfig.LST_DEVICES_APPROVED.get(position).getCreater());
+                bundle.putString("id", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getId());
+                bundle.putString("name", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getName());
+                bundle.putString("description", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getDescription());
+                bundle.putString("issue", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getIssue());
+                bundle.putString("url_image", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getUrl_image());
+                bundle.putString("create_time", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getCreate_time());
+                bundle.putString("approver", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getApprover());
+                bundle.putString("creater", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getCreater());
 
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -62,8 +62,8 @@ public class Approved_Fragment extends Fragment {
     }
 
     public void ShowDevices(){
-        if (AppConfig.LST_DEVICES_APPROVED.size() >= 1) {
-            mAdapter = new DevicesAdapter(AppConfig.LST_DEVICES_APPROVED, context);
+        if (AppConfig.LST_DEVICES_WAIT_APPROVED.size() >= 1) {
+            mAdapter = new DevicesAdapter(AppConfig.LST_DEVICES_WAIT_APPROVED, context);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());

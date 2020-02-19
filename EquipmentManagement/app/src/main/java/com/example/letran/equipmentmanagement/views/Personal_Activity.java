@@ -138,15 +138,15 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
         // Tag used to cancel the request
         String tag_string_req = "req_updatepassword";
 
-        AppConfig.FLAG = 0;
+
         pDialog.setMessage("Update Password...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.UPDATE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 Log.e("info", "Update Response: " + response.toString());
+                AppConfig.FLAG = 0;
                 hideDialog();
                 Intent intent = new Intent(Personal_Activity.this,MainActivity.class);
                 startActivity(intent);

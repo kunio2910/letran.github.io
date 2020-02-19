@@ -88,17 +88,20 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
 
         image_encode = "";
 
-        if (AppConfig.NAME_USER.equals(creater)) {
-            btndelete.setEnabled(true);
+        if (approver.isEmpty()){
+            if(AppConfig.NAME_USER.equals(creater)){
+                btndelete.setEnabled(true);
+                btnchange.setEnabled(true);
+            }else if(AppConfig.PERMISSION_USER.equals("1")){
+                btnapprove.setEnabled(true);
+                btndelete.setEnabled(true);
+                btnchange.setEnabled(true);
+            }
+        }else{
+             if(AppConfig.PERMISSION_USER.equals("1")){
+                btndelete.setEnabled(true);
+            }
         }
-
-        if(AppConfig.PERMISSION_USER.equals("1") && approver.isEmpty()){
-            btnapprove.setEnabled(true);
-        }
-
-        //device duoc approve se khong duoc change
-        if(approver.isEmpty() && AppConfig.NAME_USER.equals(creater))
-            btnchange.setEnabled(true);
 
         btnapprove.setOnClickListener(this);
         btnchange.setOnClickListener(this);
@@ -174,6 +177,10 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                     else
                         issue_temp = edtissue.getText().toString();
 
+                    if(image_encode.isEmpty()){
+                        image_encode = url_image;
+                    }
+
                     CallChangeInfor(id, name_temp, description_temp, issue_temp, image_encode, currentDate, "");
                 }
                 break;
@@ -226,7 +233,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.APPROVE_DEVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 Log.e("info", "Login Response: " + response.toString());
                 hideDialog();
                 Intent intent = new Intent(getContext(),MainActivity.class);
@@ -238,8 +244,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Approve Error: " + error.getMessage());
-                Toast.makeText(getContext(),
-                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Please click approve again ...", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {
@@ -248,7 +253,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("approver", AppConfig.NAME_USER);
                 params.put("id", id);
-
                 return params;
             }
         };
@@ -310,9 +314,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.UPDATE_DEVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 Log.e("info", "Login Response: " + response.toString());
-
 
                 image_encode = "";
                 edtname.setEnabled(false);
@@ -335,7 +337,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AppConfig.FLAG = 1;
+                        AppConfig.FLAG = 0;
                         hideDialog();
                         Intent intent = new Intent(getContext(),MainActivity.class);
                         startActivity(intent);
@@ -364,7 +366,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("url_image", url_image);
                 params.put("create_time", create_time);
                 params.put("approver", approver);
-
                 return params;
             }
         };
@@ -398,7 +399,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("name_user", name_user);
                 params.put("name_image", name_image);
                 params.put("image", image);
-
                 return params;
             }
         };
@@ -415,11 +415,5 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        AppConfig.FLAG = 1;
     }
 }

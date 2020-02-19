@@ -1,6 +1,8 @@
 package com.example.letran.equipmentmanagement.views;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,12 +19,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.letran.equipmentmanagement.R;
+import com.example.letran.equipmentmanagement.utils.AppConfig;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class DrawerLayout_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,7 +39,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
     protected DrawerLayout mDrawer;
     private ActionBar actionBar;
     private ActionBarDrawerToggle drawerToggle;
-
+    private ImageView imageView;
+    private TextView txtname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,8 +71,34 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        imageView = navigationView.getHeaderView(0).findViewById(R.id.imgAvatar);
+        txtname = navigationView.getHeaderView(0).findViewById(R.id.txtname);
+        txtname.setText("Mr.NoName");
+        if(AppConfig.LST_DEVICES.size() >= 1){
+            SetAvatar();
+        }
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DrawerLayout_Activity.this,"LongClick",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
+    public void SetAvatar(){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] imageBytes = baos.toByteArray();
+        //decode base64 string to image
+        imageBytes = Base64.decode(AppConfig.LST_DEVICES.get(0).getUrl_image(), Base64.DEFAULT);
+        //BitmapFactory.Options options = new BitmapFactory.Options();
+        //options.inSampleSize = calculateInSampleSize(options, 400,300);
+        //options.inJustDecodeBounds = false;
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
+        imageView.setImageBitmap(bMap);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -108,6 +144,4 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
