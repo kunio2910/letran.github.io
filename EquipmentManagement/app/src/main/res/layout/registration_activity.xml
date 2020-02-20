@@ -65,11 +65,25 @@
             android:textColorHint="@color/input_register_hint" />
 
         <Button
+            android:id="@+id/btnChooseAvatar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Chose Avatar"
+            android:textColor="@color/input_register" />
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
             android:id="@+id/btnRegistration"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:padding="10dp"
             android:text="REGISTRATION"
             android:background="#ea4c88"

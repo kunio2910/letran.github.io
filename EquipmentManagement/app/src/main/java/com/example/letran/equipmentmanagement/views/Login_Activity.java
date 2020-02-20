@@ -97,6 +97,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
 
     private void CallLogin(final String name,final String password){
         // Tag used to cancel the request
+        AppConfig.AVATAR = "";
         String tag_string_req = "req_login";
 
         pDialog.setMessage("Logging in ...");
@@ -119,6 +120,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                         String password_temp = json_data.getString("password");
                         String permission_temp = json_data.getString("permission");
                         String create_time_temp = json_data.getString("create_time");
+                        String avatar_temp = json_data.getString("avatar");
                         Log.e("info", "Login Response: " + response.toString());
                         if(name.equals(name_temp) && password.equals(password_temp)){
                             isCheckLogin = true;
@@ -127,6 +129,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                             AppConfig.PASSWORD_USER = password;
                             AppConfig.ID_USER = id_temp;
                             AppConfig.CREATE_TIME_USER = create_time_temp;
+                            AppConfig.AVATAR = avatar_temp;
                             break;
                         }
                     }

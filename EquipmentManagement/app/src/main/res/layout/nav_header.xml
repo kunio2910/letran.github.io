@@ -26,5 +26,5 @@
         android:textStyle="italic|bold"
         android:textSize="23dp"
         android:text="Name"
-        android:textColor="@color/white" />
+        android:textColor="@color/input_login" />
 </RelativeLayout>

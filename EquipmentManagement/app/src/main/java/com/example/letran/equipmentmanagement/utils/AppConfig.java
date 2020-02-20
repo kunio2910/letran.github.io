@@ -20,6 +20,8 @@ public class AppConfig {
     public static String GET_USER_DETAILS = "https://letrantrong.000webhostapp.com/ManageDevices/users/get_user_details.php";
     public static String CHECK_USER_LOGIN = "https://letrantrong.000webhostapp.com/ManageDevices/users/checklogin.php";
     public static String CHECK_USER_NAME = "https://letrantrong.000webhostapp.com/ManageDevices/users/checkname.php";
+    public static String UPDATE_AVATAR = "https://letrantrong.000webhostapp.com/ManageDevices/users/update_avatar.php";
+    public static String GET_AVATAR = "https://letrantrong.000webhostapp.com/ManageDevices/users/get_user_avatar.php";
 
     public static String GET_ALL_IMAGE = "https://letrantrong.000webhostapp.com/ManageDevices/image/get_all_images.php";
     public static String CREATE_IMAGE = "https://letrantrong.000webhostapp.com/ManageDevices/image/create_image.php";
@@ -37,6 +39,7 @@ public class AppConfig {
     public static String PERMISSION_USER;
     public static String ID_USER;
     public static String CREATE_TIME_USER;
+    public static String AVATAR;
     public static int FLAG = 0; //0 update again, 1 get list current
     public static List<Device> LST_DEVICES = new ArrayList<>();
     public static List<Device> LST_DEVICES_APPROVED = new ArrayList<>();

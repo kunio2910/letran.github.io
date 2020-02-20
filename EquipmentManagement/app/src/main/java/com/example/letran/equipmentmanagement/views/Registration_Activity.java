@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,44 +34,46 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 
-public class Registration_Activity extends DrawerLayout_Activity implements View.OnClickListener {
+public class Registration_Activity extends Activity implements View.OnClickListener {
 
     private EditText inputName, inputPassword, inputPasswordAgain;
-    private Button btnRegistration;
+    private Button btnRegistration,btnChoseAvatar;
+    private ImageView imageAvatar;
     private ProgressDialog  pDialog;
     private boolean isExitName;
+    private String image_encode_avatar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.registration_activity);
+        setContentView(R.layout.registration_activity);
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        LayoutInflater inflater = (LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View contentView = inflater.inflate(R.layout.registration_activity, null, false);
-        mDrawer.addView(contentView, 0);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Initiate();
         btnRegistration.setOnClickListener(this);
+        btnChoseAvatar.setOnClickListener(this);
     }
 
     private void Initiate(){
         AppConfig.FLAG = 1;
+        image_encode_avatar = "";
         inputName = (EditText)findViewById(R.id.edtName);
         inputPassword = (EditText)findViewById(R.id.edtPassword);
         inputPasswordAgain = (EditText)findViewById(R.id.edtPassword_again);
         btnRegistration = (Button)findViewById(R.id.btnRegistration);
+        btnChoseAvatar = (Button)findViewById(R.id.btnChooseAvatar);
+        imageAvatar = (ImageView)findViewById(R.id.imgAvatar);
 
         pDialog = new ProgressDialog(Registration_Activity.this);
         pDialog.setCancelable(false);
@@ -91,8 +99,41 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
                     CheckName(name,password);
 
                 break;
+            case R.id.btnChooseAvatar:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+                break;
             default:
                 break;
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+        {
+            Uri chosenImageUri = data.getData();
+
+            Bitmap mBitmap = null;
+            try {
+                mBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), chosenImageUri);
+                //resize bitmap
+                mBitmap = Bitmap.createScaledBitmap(mBitmap,1200,900,false);
+                imageAvatar.setImageBitmap(mBitmap);
+
+                BitmapDrawable drawable = (BitmapDrawable) imageAvatar.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                //resize encode
+                bitmap.compress(Bitmap.CompressFormat.JPEG,70,bos);
+                byte[] bb = bos.toByteArray();
+                String image = Base64.encodeToString(bb,0);
+                image_encode_avatar = image;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -128,7 +169,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
                     if(isExitName == false){
                         Toast.makeText(getApplicationContext(), "Name is exited ! ", Toast.LENGTH_LONG).show();
                     }else
-                        CallRegistration(name,password);
+                        CallRegistration(name,password,image_encode_avatar);
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
@@ -150,7 +191,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
         AppController.getInstance(this).addToRequestQueue(strReq, tag_string_req);
     }
 
-    private void CallRegistration(final String name, final String password) {
+    private void CallRegistration(final String name, final String password, final String image_encode_avatar) {
         // Tag used to cancel the request
         String tag_string_req = "req_registration";
 
@@ -192,6 +233,7 @@ public class Registration_Activity extends DrawerLayout_Activity implements View
                 params.put("password", password);
                 params.put("permission", "0");
                 params.put("create_time", String.valueOf(currentDate));
+                params.put("avatar", image_encode_avatar);
 
                 return params;
             }
