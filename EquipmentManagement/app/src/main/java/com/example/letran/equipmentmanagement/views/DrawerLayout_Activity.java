@@ -41,7 +41,6 @@ import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,7 +74,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         //Change color for actionbar
@@ -97,6 +96,10 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         imageView = navigationView.getHeaderView(0).findViewById(R.id.imgAvatar);
         txtname = navigationView.getHeaderView(0).findViewById(R.id.txtname);
         pDialog = new ProgressDialog(DrawerLayout_Activity.this);
+
+        if(!AppConfig.AVATAR.isEmpty()){
+            SetAvatar();
+        }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

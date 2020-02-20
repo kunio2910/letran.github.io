@@ -53,11 +53,6 @@ public class Login_Activity extends Activity implements View.OnClickListener {
     }
 
     private void Initiate(){
-        AppConfig.NAME_USER = "";
-        AppConfig.PASSWORD_USER = "";
-        AppConfig.PERMISSION_USER = "";
-        AppConfig.ID_USER = "";
-
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegistration = (Button)findViewById(R.id.btnLinkToRegistrerScreen);
 
@@ -97,6 +92,10 @@ public class Login_Activity extends Activity implements View.OnClickListener {
 
     private void CallLogin(final String name,final String password){
         // Tag used to cancel the request
+        AppConfig.NAME_USER = "";
+        AppConfig.PASSWORD_USER = "";
+        AppConfig.PERMISSION_USER = "";
+        AppConfig.ID_USER = "";
         AppConfig.AVATAR = "";
         String tag_string_req = "req_login";
 
