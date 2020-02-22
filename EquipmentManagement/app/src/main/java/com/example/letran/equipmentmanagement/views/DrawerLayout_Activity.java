@@ -167,7 +167,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
-            Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(DrawerLayout_Activity.this,SearchDevice_Activity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
             startActivity(intent);
@@ -283,7 +284,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
-            Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(DrawerLayout_Activity.this,SearchDevice_Activity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
             startActivity(intent);

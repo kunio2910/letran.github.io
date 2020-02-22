@@ -9,6 +9,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.example.letran.equipmentmanagement.models.Device;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHolder> {
@@ -100,5 +103,11 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
             imageDot = (ImageView)view.findViewById(R.id.dot);
             imageView = (ImageView)view.findViewById(R.id.image);
         }
+
+    }
+
+    public void filterList(ArrayList<Device> filterdNames) {
+        this.lstDevices = filterdNames;
+        notifyDataSetChanged();
     }
 }

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.fragments.DetailDevice_Fragment;
@@ -53,6 +54,22 @@ public class ShowDetail_Activity extends DrawerLayout_Activity implements Action
         setupViewPager();
     }
 
+    /**
+     * Adding custom view to tab
+     */
+    private void setupTabIcons() {
+
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabOne.setText("DETAILS");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(R.drawable.home_black_18dp, 0, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabTwo.setText("TREE");
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.person_black_18dp, 0, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+    }
+
     private void setupViewPager() {
         mAdapter = new TabsPagerDetailDeviceAdapter(getSupportFragmentManager());
         mAdapter.addFragment(new DetailDevice_Fragment(), "DETAILS");
@@ -60,6 +77,7 @@ public class ShowDetail_Activity extends DrawerLayout_Activity implements Action
         viewPager.setAdapter(mAdapter);
 
         setIcon();
+        //setupTabIcons();
     }
 
     private void setIcon() {

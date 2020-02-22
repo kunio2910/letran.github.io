@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -59,6 +60,7 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
         setIcon();
+        //setupTabIcons();
 
 //        Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
 //        ShowDevices_Fragment showDevices_fragment = (ShowDevices_Fragment)page;
@@ -75,6 +77,27 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    /**
+     * Adding custom view to tab
+     */
+    private void setupTabIcons() {
+
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabOne.setText("ALL");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(R.drawable.home_black_18dp, 0, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabTwo.setText("APPROVED");
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.person_black_18dp, 0, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabThree.setText("WAIT");
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(R.drawable.person_black_18dp, 0, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
     private void setupViewPager() {
