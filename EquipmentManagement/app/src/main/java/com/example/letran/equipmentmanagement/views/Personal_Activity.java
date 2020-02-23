@@ -1,31 +1,19 @@
 package com.example.letran.equipmentmanagement.views;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.text.method.PasswordTransformationMethod;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,10 +24,10 @@ import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class Personal_Activity extends DrawerLayout_Activity implements View.OnClickListener {
 
@@ -124,12 +112,12 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
                 String confirmpassword = edtConfirmPassword.getText().toString();
 
                 if(TextUtils.isEmpty(oldpassword) || TextUtils.isEmpty(oldpassword) || TextUtils.isEmpty(oldpassword)){
-                    Toast.makeText(Personal_Activity.this, "Enter oldpassword and newpassword and confirmpassword again", Toast.LENGTH_LONG).show();
+                    Toasty.warning(getApplicationContext(), "Enter oldpassword and newpassword and confirmpassword again...!", Toast.LENGTH_SHORT, true).show();
                     return;
                 }else if(!oldpassword.equals(AppConfig.PASSWORD_USER)){
-                    Toast.makeText(Personal_Activity.this,"OldPassword is not correct !",Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "OldPassword is not correct...!", Toast.LENGTH_SHORT, true).show();
                 }else if(!newpassword.equals(confirmpassword)){
-                    Toast.makeText(Personal_Activity.this,"Password and confirmpassword is not same !",Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "Password and confirmpassword is not same...!", Toast.LENGTH_SHORT, true).show();
                 }else{
                     CallUpdatePassword(AppConfig.ID_USER, newpassword);
                 }
@@ -154,17 +142,24 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
                 Log.e("info", "Update Response: " + response.toString());
                 AppConfig.FLAG = 0;
                 hideDialog();
-                Intent intent = new Intent(Personal_Activity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                Toasty.success(getApplicationContext(), "Update Completed...!", Toast.LENGTH_SHORT, true).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        Intent intent = new Intent(Personal_Activity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 1000);
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Update Error: " + error.getMessage());
-                Toast.makeText(Personal_Activity.this,
-                        "Please click update again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getApplicationContext(), "Please click update again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         }) {

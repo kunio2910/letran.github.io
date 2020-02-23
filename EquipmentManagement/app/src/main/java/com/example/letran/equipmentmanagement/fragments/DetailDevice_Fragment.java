@@ -29,7 +29,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.views.Login_Activity;
 import com.example.letran.equipmentmanagement.views.MainActivity;
+import com.example.letran.equipmentmanagement.views.Registration_Activity;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.ByteArrayOutputStream;
@@ -39,6 +41,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -267,24 +271,32 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         // Tag used to cancel the request
         String tag_string_req = "req_approvdevice";
         AppConfig.FLAG = 0;
-        pDialog.setMessage("Approve...");
+        pDialog.setMessage("Approving...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.APPROVE_DEVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("info", "Login Response: " + response.toString());
+                Log.e("info", "Approve Response: " + response.toString());
                 hideDialog();
-                Intent intent = new Intent(getContext(),MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                Toasty.success(getContext(), "Approve Completed...!", Toast.LENGTH_SHORT, true).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        Intent intent = new Intent(getContext(),MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                }, 1000);
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Approve Error: " + error.getMessage());
-                Toast.makeText(getContext(), "Please click approve again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getContext(), "Please click approve again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         }) {
@@ -307,26 +319,32 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         String tag_string_req = "req_updatedevice";
 
         AppConfig.FLAG = 0;
-        pDialog.setMessage("Approve...");
+        pDialog.setMessage("Deleting...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.DELETE_DEVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                Log.e("info", "Login Response: " + response.toString());
+                Log.e("info", "Delete Response: " + response.toString());
                 hideDialog();
-                Intent intent = new Intent(getContext(),MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                Toasty.success(getContext(), "Delete Completed...!", Toast.LENGTH_SHORT, true).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        Intent intent = new Intent(getContext(),MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                }, 1000);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("infor", "Approve Error: " + error.getMessage());
-                Toast.makeText(getContext(),
-                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                Log.e("infor", "Delete Error: " + error.getMessage());
+                Toasty.warning(getContext(), "Please delete again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         }) {
@@ -374,16 +392,15 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 400, 300, true);
                 imageview.setImageBitmap(bMap);
                 //txtnote.setVisibility(View.VISIBLE);
-
+                AppConfig.FLAG = 0;
+                hideDialog();
+                Toasty.success(getContext(), "Change infor Completed...!", Toast.LENGTH_SHORT, true).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AppConfig.FLAG = 0;
-                        hideDialog();
                         Intent intent = new Intent(getContext(),MainActivity.class);
                         startActivity(intent);
                         getActivity().finish();
-
                     }
                 }, 1000);
 
@@ -391,9 +408,8 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("infor", "Approve Error: " + error.getMessage());
-                Toast.makeText(getContext(),
-                        "Please click approve again ...", Toast.LENGTH_LONG).show();
+                Log.e("infor", "Change Error: " + error.getMessage());
+                Toasty.warning(getContext(), "Please change again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         }) {

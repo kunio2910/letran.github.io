@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class InputDevices_Activity extends DrawerLayout_Activity implements View.OnClickListener {
 
     EditText edtNameDevice,edtDescription,edtIssue;
@@ -86,9 +88,7 @@ public class InputDevices_Activity extends DrawerLayout_Activity implements View
                     AddDevice(name,description,issue,image_encode);
                     btnAdd.setEnabled(false);
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter device details!", Toast.LENGTH_LONG)
-                            .show();
+                    Toasty.warning(getApplicationContext(), "Please enter device details...!", Toast.LENGTH_SHORT, true).show();
                 }
                 break;
             case R.id.btnChooseImage:
@@ -137,13 +137,13 @@ public class InputDevices_Activity extends DrawerLayout_Activity implements View
             @Override
             public void onResponse(String response) {
                 hideDialog();
-                Toast.makeText(InputDevices_Activity.this,"Create Data Completed !",Toast.LENGTH_LONG).show();
+                Toasty.success(getApplicationContext(), "Create Data Completed...!", Toast.LENGTH_SHORT, true).show();
                 AppConfig.FLAG = 0;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         // Magic here
-                        Intent intent = new Intent(InputDevices_Activity.this,MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
                     }
                 }, 1000);
@@ -154,8 +154,7 @@ public class InputDevices_Activity extends DrawerLayout_Activity implements View
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        "Please login again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getApplicationContext(), "Please input again ...!", Toast.LENGTH_SHORT, true).show();
                 btnAdd.setEnabled(true);
                 hideDialog();
             }

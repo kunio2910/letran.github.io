@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import es.dmoral.toasty.Toasty;
+
 public class Login_Activity extends Activity implements View.OnClickListener {
 
     private EditText inputName, inputPassword;
@@ -76,7 +78,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                 String password = inputPassword.getText().toString();
 
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(), "Enter name and password", Toast.LENGTH_LONG).show();
+                    Toasty.warning(getApplicationContext(), "Enter name and password", Toast.LENGTH_SHORT, true).show();
                     return;
                 }else
                     CallLogin(name,password);
@@ -142,12 +144,12 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "The user name or password is incorrect ...", Toast.LENGTH_LONG).show();
+                        Toasty.error(getApplicationContext(), "The user name or password is incorrect ...", Toast.LENGTH_SHORT, true).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -155,8 +157,7 @@ public class Login_Activity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        "Please login again ...", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), "Please login again ...", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         });

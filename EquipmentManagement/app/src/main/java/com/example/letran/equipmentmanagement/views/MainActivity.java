@@ -35,6 +35,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class MainActivity extends DrawerLayout_Activity implements ActionBar.TabListener {
 
@@ -168,7 +170,7 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(context, "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -176,8 +178,7 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Get data Error: " + error.getMessage());
-                Toast.makeText(context,
-                        "Please get data again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getApplicationContext(), "Please get data again ...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         });

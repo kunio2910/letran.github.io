@@ -42,6 +42,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class Registration_Activity extends Activity implements View.OnClickListener {
 
@@ -90,10 +92,10 @@ public class Registration_Activity extends Activity implements View.OnClickListe
                 String password_again = inputPasswordAgain.getText().toString();
 
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(password) || TextUtils.isEmpty(password_again)){
-                    Toast.makeText(getApplicationContext(), "Enter name and password and password again", Toast.LENGTH_LONG).show();
+                    Toasty.warning(getApplicationContext(), "Enter name and password and password again", Toast.LENGTH_SHORT, true).show();
                     return;
                 }else if(!password.equals(password_again)){
-                    Toast.makeText(getApplicationContext(), "Password and password again is dissimilar", Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "Password and password again is dissimilar", Toast.LENGTH_SHORT, true).show();
                     return;
                 }else
                     CheckName(name,password);
@@ -167,13 +169,13 @@ public class Registration_Activity extends Activity implements View.OnClickListe
                     }
 
                     if(isExitName == false){
-                        Toast.makeText(getApplicationContext(), "Name is exited ! ", Toast.LENGTH_LONG).show();
+                        Toasty.error(getApplicationContext(), "Name is exited...! ", Toast.LENGTH_SHORT, true).show();
                     }else
                         CallRegistration(name,password,image_encode_avatar);
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
                 }
 
             }
@@ -181,8 +183,7 @@ public class Registration_Activity extends Activity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        "Please login again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getApplicationContext(), "Please login again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         });
@@ -203,7 +204,7 @@ public class Registration_Activity extends Activity implements View.OnClickListe
             public void onResponse(String response) {
                 AppConfig.FLAG = 0;
                 hideDialog();
-                Toast.makeText(Registration_Activity.this,"Registration Completed !",Toast.LENGTH_LONG).show();
+                Toasty.success(getApplicationContext(), "Registration Completed...!", Toast.LENGTH_SHORT, true).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -211,7 +212,7 @@ public class Registration_Activity extends Activity implements View.OnClickListe
                         Intent intent = new Intent(Registration_Activity.this,Login_Activity.class);
                         startActivity(intent);
                     }
-                }, 3000);
+                }, 1000);
 
 
             }
@@ -219,8 +220,7 @@ public class Registration_Activity extends Activity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("infor", "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        "Please login again ...", Toast.LENGTH_LONG).show();
+                Toasty.warning(getApplicationContext(), "Please registration again...!", Toast.LENGTH_SHORT, true).show();
                 hideDialog();
             }
         }){
