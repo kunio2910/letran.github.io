@@ -9,6 +9,7 @@ public class Device {
     private String create_time;
     private String approver;
     private String creater;
+    private String note;
 
     public static final String TABLE_NAME = "devices";
     public static final String COLUMN_ID = "id";
@@ -19,6 +20,7 @@ public class Device {
     public static final String COLUMN_CREATE_TIME = "create_time";
     public static final String COLUMN_APPROVER = "approver";
     public static final String COLUMN_CREATER = "creater";
+    public static final String COLUMN_NOTE = "note";
 
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
@@ -29,14 +31,15 @@ public class Device {
                     + COLUMN_URL_IMAGE + " TEXT,"
                     + COLUMN_CREATE_TIME + " TEXT,"
                     + COLUMN_APPROVER + " TEXT,"
-                    + COLUMN_CREATER + " TEXT"
+                    + COLUMN_CREATER + " TEXT,"
+                    + COLUMN_NOTE + " TEXT"
                     + ")";
 
     public Device(){
 
     }
 
-    public Device(String id, String name, String description, String issue, String url_image, String create_time, String approver, String creater) {
+    public Device(String id, String name, String description, String issue, String url_image, String create_time, String approver, String creater, String note) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,6 +48,7 @@ public class Device {
         this.create_time = create_time;
         this.approver = approver;
         this.creater = creater;
+        this.note = note;
     }
 
     public String getId() {
@@ -109,5 +113,13 @@ public class Device {
 
     public void setCreater(String creater) {
         this.creater = creater;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

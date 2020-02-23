@@ -2,7 +2,9 @@ package com.example.letran.equipmentmanagement.fragments;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +37,7 @@ import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 import com.example.letran.equipmentmanagement.views.Login_Activity;
 import com.example.letran.equipmentmanagement.views.MainActivity;
+import com.example.letran.equipmentmanagement.views.Personal_Activity;
 import com.example.letran.equipmentmanagement.views.Registration_Activity;
 import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 import com.squareup.picasso.Picasso;
@@ -92,7 +96,8 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             if(AppConfig.NAME_USER.equals(creater)){
                 btndelete.setEnabled(true);
                 btnchange.setEnabled(true);
-            }else if(AppConfig.PERMISSION_USER.equals("1")){
+            }
+            if(AppConfig.PERMISSION_USER.equals("1")){
                 btnapprove.setEnabled(true);
                 btndelete.setEnabled(true);
                 btnchange.setEnabled(true);
@@ -146,7 +151,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnapprove:
-                CallApprove(approver, id);
+                ShowDialog();
                 break;
             case R.id.btnchange:
                 if(btnchange.getText().equals("CHANGE")) {
@@ -223,9 +228,39 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }
     }
 
-    private void CallApprove(final String approver, final String id) {
+
+    private void ShowDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.noteapprove_dialog, null);
+        final EditText edtNotes = (EditText)alertLayout.findViewById(R.id.edtNotes);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("NOTE");
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String note = edtNotes.getText().toString();
+                CallApprove(approver,id,note);
+            }
+        });
+
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+
+    private void CallApprove(final String approver, final String id, final String note) {
         // Tag used to cancel the request
-        String tag_string_req = "req_updatedevice";
+        String tag_string_req = "req_approvdevice";
         AppConfig.FLAG = 0;
         pDialog.setMessage("Approve...");
         showDialog();
@@ -253,6 +288,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("approver", AppConfig.NAME_USER);
                 params.put("id", id);
+                params.put("note",note);
                 return params;
             }
         };
@@ -366,39 +402,6 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("url_image", url_image);
                 params.put("create_time", create_time);
                 params.put("approver", approver);
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
-    }
-
-    private void CallUpdateImage(final String name_user,final String name_image, final String image) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_updateimage";
-
-        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.CREATE_IMAGE, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("info", "Update Response: " + response.toString());
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("infor", "Approve Error: " + error.getMessage());
-                Toast.makeText(getContext(),
-                        "Please click approve again ...", Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }) {
-            @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name_user", name_user);
-                params.put("name_image", name_image);
-                params.put("image", image);
                 return params;
             }
         };

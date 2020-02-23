@@ -94,7 +94,7 @@ public class InputDevices_Activity extends DrawerLayout_Activity implements View
             case R.id.btnChooseImage:
                 Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, 1);
+                startActivityForResult(photoPickerIntent, 2);
                 break;
         }
     }
@@ -102,7 +102,7 @@ public class InputDevices_Activity extends DrawerLayout_Activity implements View
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
+        if (resultCode == RESULT_OK && requestCode == 2)
         {
             Uri chosenImageUri = data.getData();
 

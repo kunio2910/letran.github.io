@@ -113,7 +113,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == 1) {
             Uri chosenImageUri = data.getData();
 
             Bitmap mBitmap = null;

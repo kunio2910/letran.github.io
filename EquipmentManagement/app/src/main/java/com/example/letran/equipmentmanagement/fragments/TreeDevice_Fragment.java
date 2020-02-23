@@ -21,7 +21,7 @@ import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
 public class TreeDevice_Fragment extends Fragment implements View.OnClickListener {
 
-    private String name_device, description, issue, url_image, create_time, approver,creater, id;
+    private String name_device, description, issue, url_image, create_time, approver,creater,note, id;
     Button btnstar_1,btnstar_2,btnstar_3;
 
     @Nullable
@@ -58,6 +58,7 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
         create_time = bundle.getString("create_time");
         approver = bundle.getString("approver");
         creater = bundle.getString("creater");
+        note = bundle.getString("note");
     }
 
     @Override
@@ -80,25 +81,35 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
         final EditText edtApprover = (EditText) alertLayout.findViewById(R.id.edtApprover);
         final EditText edtDate = (EditText) alertLayout.findViewById(R.id.edtDate);
+        final EditText edtNote = (EditText) alertLayout.findViewById(R.id.edtNotes);
 
         if(star == 1){
             edtApprover.setText(creater);
             edtDate.setText(create_time);
+            edtNote.setText("Empty");
         }else if(star == 2){
             if (approver.isEmpty()) {
                 edtApprover.setText("Empty");
                 edtDate.setText("Empty");
+                edtNote.setText("Empty");
             }else{
                 edtApprover.setText(approver);
                 edtDate.setText("Empty");
+                if(note.isEmpty()){
+                    edtNote.setText("Empty");
+                }else
+                    edtNote.setText(note);
             }
         }else if(star == 3){
             if (approver.isEmpty()) {
                 edtApprover.setText("Empty");
                 edtDate.setText("Empty");
+                edtNote.setText("Empty");
             }else{
                 edtApprover.setText("Empty");
                 edtDate.setText("Empty");
+                edtNote.setText("Empty");
+
             }
         }
 

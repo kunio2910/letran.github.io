@@ -69,8 +69,10 @@ public class SearchDevice_Activity extends DrawerLayout_Activity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(SearchDevice_Activity.this, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                deviceList.clear();
-                deviceList.addAll(deviceList_temp);
+                if(deviceList_temp.size() < AppConfig.LST_DEVICES.size()) {
+                    deviceList.clear();
+                    deviceList.addAll(deviceList_temp);
+                }
                 Intent intent = new Intent(SearchDevice_Activity.this,ShowDetail_Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", deviceList.get(position).getId());
@@ -101,6 +103,7 @@ public class SearchDevice_Activity extends DrawerLayout_Activity {
         editTextSearch = (EditText)findViewById(R.id.editTextSearch);
 
         deviceList = new ArrayList<>(AppConfig.LST_DEVICES);
+        deviceList_temp = new ArrayList<>(AppConfig.LST_DEVICES);
     }
 
 
