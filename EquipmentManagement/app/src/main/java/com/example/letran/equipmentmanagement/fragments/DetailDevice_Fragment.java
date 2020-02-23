@@ -1,7 +1,5 @@
 package com.example.letran.equipmentmanagement.fragments;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,19 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,12 +29,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
-import com.example.letran.equipmentmanagement.views.Login_Activity;
 import com.example.letran.equipmentmanagement.views.MainActivity;
-import com.example.letran.equipmentmanagement.views.Personal_Activity;
-import com.example.letran.equipmentmanagement.views.Registration_Activity;
-import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
-import com.squareup.picasso.Picasso;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,6 +51,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
     private Button btnapprove, btnchange, btndelete, btnchoseimage;
     private ProgressDialog pDialog;
     private String image_encode;
+    private Bitmap bMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +60,20 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         GetInfor();
         Inititate(rootView);
         ShowDetailDevice();
+
+        imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Zoom image used library PhotoView
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                View mView = getLayoutInflater().inflate(R.layout.zoomimage_dialog, null);
+                PhotoView photoView = mView.findViewById(R.id.imageView);
+                photoView.setImageBitmap(bMap);
+                mBuilder.setView(mView);
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+        });
         return rootView;
     }
 
@@ -140,7 +145,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             //decode base64 string to image
             imageBytes = Base64.decode(url_image, Base64.DEFAULT);
             Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            Bitmap bMap = Bitmap.createScaledBitmap(decodedImage, 1200, 900, true);
+            bMap = Bitmap.createScaledBitmap(decodedImage, 1800, 1350, true);
             imageview.setImageBitmap(bMap);
         } else {
             imageview.setImageResource(R.drawable.notfoundimage);
