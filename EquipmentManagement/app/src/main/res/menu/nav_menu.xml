@@ -14,6 +14,10 @@
         app:showAsAction="ifRoom"
         android:title="Search" />
 
+    <item android:id="@+id/nav_piechart"
+        android:icon="@drawable/chartart"
+        android:title="Pie Chart" />
+
     <item android:id="@+id/nav_logout"
         android:icon="@drawable/logout"
         android:title="Logout" />

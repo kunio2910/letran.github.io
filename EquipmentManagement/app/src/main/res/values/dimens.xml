@@ -26,4 +26,5 @@
     <dimen name="lbl_order_status">20sp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="price_with_label">16sp</dimen>
+    <dimen name="title">23sp</dimen>
 </resources>

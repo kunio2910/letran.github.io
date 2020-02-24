@@ -29,6 +29,7 @@
         <activity
             android:name=".views.SearchDevice_Activity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity android:name=".views.Chart_Activity" />
     </application>
 
 </manifest>

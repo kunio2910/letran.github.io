@@ -4,19 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 
 import android.support.v4.widget.DrawerLayout;
@@ -97,7 +93,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         txtname = navigationView.getHeaderView(0).findViewById(R.id.txtname);
         pDialog = new ProgressDialog(DrawerLayout_Activity.this);
 
-        if(!AppConfig.AVATAR.isEmpty()){
+        if (!AppConfig.AVATAR.isEmpty()) {
             SetAvatar();
         }
 
@@ -167,7 +163,10 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
-            Intent intent = new Intent(DrawerLayout_Activity.this,SearchDevice_Activity.class);
+            Intent intent = new Intent(DrawerLayout_Activity.this, SearchDevice_Activity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_piechart) {
+            Intent intent = new Intent(DrawerLayout_Activity.this, Chart_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
@@ -284,7 +283,10 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
-            Intent intent = new Intent(DrawerLayout_Activity.this,SearchDevice_Activity.class);
+            Intent intent = new Intent(DrawerLayout_Activity.this, SearchDevice_Activity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_piechart) {
+            Intent intent = new Intent(DrawerLayout_Activity.this, Chart_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
