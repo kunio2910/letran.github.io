@@ -16,7 +16,7 @@
 
     <item android:id="@+id/nav_piechart"
         android:icon="@drawable/chartart"
-        android:title="Pie Chart" />
+        android:title="Chart art" />
 
     <item android:id="@+id/nav_logout"
         android:icon="@drawable/logout"

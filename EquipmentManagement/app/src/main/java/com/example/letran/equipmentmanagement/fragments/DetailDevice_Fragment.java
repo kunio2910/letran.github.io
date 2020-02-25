@@ -259,7 +259,8 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String note = edtNotes.getText().toString();
-                CallApprove(approver,id,note);
+                String date_approve = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                CallApprove(approver,id,note,date_approve);
             }
         });
 
@@ -267,7 +268,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         dialog.show();
     }
 
-    private void CallApprove(final String approver, final String id, final String note) {
+    private void CallApprove(final String approver, final String id, final String note, final String date_approve) {
         // Tag used to cancel the request
         String tag_string_req = "req_approvdevice";
         AppConfig.FLAG = 0;
@@ -306,6 +307,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("approver", AppConfig.NAME_USER);
                 params.put("id", id);
                 params.put("note",note);
+                params.put("date_approve",date_approve);
                 return params;
             }
         };

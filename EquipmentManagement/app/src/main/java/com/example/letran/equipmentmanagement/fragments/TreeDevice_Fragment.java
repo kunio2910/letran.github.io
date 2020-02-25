@@ -21,7 +21,7 @@ import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
 public class TreeDevice_Fragment extends Fragment implements View.OnClickListener {
 
-    private String name_device, description, issue, url_image, create_time, approver,creater,note, id;
+    private String name_device, description, issue, url_image, create_time, approver,creater,note,date_approve, id;
     Button btnstar_1,btnstar_2,btnstar_3;
 
     @Nullable
@@ -59,6 +59,7 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
         approver = bundle.getString("approver");
         creater = bundle.getString("creater");
         note = bundle.getString("note");
+        date_approve = bundle.getString("date_approve");
     }
 
     @Override
@@ -94,8 +95,8 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
                 edtNote.setText("Empty");
             }else{
                 edtApprover.setText(approver);
-                edtDate.setText("Empty");
-                if(note.isEmpty()){
+                edtDate.setText(date_approve);
+                if(note.isEmpty() || note == null){
                     edtNote.setText("Empty");
                 }else
                     edtNote.setText(note);

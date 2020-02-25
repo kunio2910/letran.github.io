@@ -49,6 +49,8 @@ public class Approved_Fragment extends Fragment {
                 bundle.putString("create_time", AppConfig.LST_DEVICES_APPROVED.get(position).getCreate_time());
                 bundle.putString("approver", AppConfig.LST_DEVICES_APPROVED.get(position).getApprover());
                 bundle.putString("creater", AppConfig.LST_DEVICES_APPROVED.get(position).getCreater());
+                bundle.putString("note", AppConfig.LST_DEVICES_APPROVED.get(position).getNote());
+                bundle.putString("date_approve", AppConfig.LST_DEVICES_APPROVED.get(position).getDateApprove());
 
                 intent.putExtras(bundle);
                 startActivity(intent);

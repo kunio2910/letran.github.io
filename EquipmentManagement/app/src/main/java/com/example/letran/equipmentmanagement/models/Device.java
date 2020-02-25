@@ -10,6 +10,7 @@ public class Device {
     private String approver;
     private String creater;
     private String note;
+    private String date_approve;
 
     public static final String TABLE_NAME = "devices";
     public static final String COLUMN_ID = "id";
@@ -21,6 +22,7 @@ public class Device {
     public static final String COLUMN_APPROVER = "approver";
     public static final String COLUMN_CREATER = "creater";
     public static final String COLUMN_NOTE = "note";
+    public static final String COLUMN_DATE_APPROVE = "date_approve";
 
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
@@ -32,14 +34,15 @@ public class Device {
                     + COLUMN_CREATE_TIME + " TEXT,"
                     + COLUMN_APPROVER + " TEXT,"
                     + COLUMN_CREATER + " TEXT,"
-                    + COLUMN_NOTE + " TEXT"
+                    + COLUMN_NOTE + " TEXT,"
+                    + COLUMN_DATE_APPROVE + " TEXT"
                     + ")";
 
     public Device(){
 
     }
 
-    public Device(String id, String name, String description, String issue, String url_image, String create_time, String approver, String creater, String note) {
+    public Device(String id, String name, String description, String issue, String url_image, String create_time, String approver, String creater, String note, String date_approve) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -49,6 +52,7 @@ public class Device {
         this.approver = approver;
         this.creater = creater;
         this.note = note;
+        this.date_approve = date_approve;
     }
 
     public String getId() {
@@ -121,5 +125,13 @@ public class Device {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getDateApprove() {
+        return date_approve;
+    }
+
+    public void setDateApprove(String date_approve) {
+        this.date_approve = date_approve;
     }
 }

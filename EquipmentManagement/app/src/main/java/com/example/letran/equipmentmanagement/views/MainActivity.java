@@ -111,9 +111,9 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
     }
 
     private void setIcon() {
-        tabLayout.getTabAt(0).setIcon(R.drawable.home_black_18dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.person_black_18dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.person_black_18dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.all);
+        tabLayout.getTabAt(1).setIcon(R.drawable.icon_approved);
+        tabLayout.getTabAt(2).setIcon(R.drawable.wait);
     }
 
     private void GetAllDevices(final Context context){
@@ -150,6 +150,7 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
                             device.setApprover(json_data.getString("approver"));
                             device.setCreater(json_data.getString("creater"));
                             device.setNote(json_data.getString("note"));
+                            device.setDateApprove(json_data.getString("date_approve"));
                             Log.e("info", "Login Response: " + response.toString());
 
                             AppConfig.LST_DEVICES.add(device);

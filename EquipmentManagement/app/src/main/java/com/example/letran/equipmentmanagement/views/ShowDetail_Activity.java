@@ -81,8 +81,8 @@ public class ShowDetail_Activity extends DrawerLayout_Activity implements Action
     }
 
     private void setIcon() {
-        tabLayout.getTabAt(0).setIcon(R.drawable.home_black_18dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.person_black_18dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.detail);
+        tabLayout.getTabAt(1).setIcon(R.drawable.treeview);
     }
 
     @Override
