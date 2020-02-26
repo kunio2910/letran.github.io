@@ -83,6 +83,8 @@ public class SearchDevice_Activity extends DrawerLayout_Activity {
                 bundle.putString("create_time", deviceList.get(position).getCreate_time());
                 bundle.putString("approver", deviceList.get(position).getApprover());
                 bundle.putString("creater", deviceList.get(position).getCreater());
+                bundle.putString("note", deviceList.get(position).getNote());
+                bundle.putString("date_approve", deviceList.get(position).getDateApprove());
 
                 intent.putExtras(bundle);
                 startActivity(intent);

@@ -4,19 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.models.Device;
-import com.example.letran.equipmentmanagement.utils.AppConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -33,7 +29,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_alldevices_row,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.device_viewcard_fragment_row,parent,false);
         return new MyViewHolder(itemView);
     }
 

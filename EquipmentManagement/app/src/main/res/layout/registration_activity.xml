@@ -38,12 +38,18 @@
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/input_register_bg">
+
         <EditText
             android:id="@+id/edtPassword"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:padding="10dp"
+            android:layout_weight=".9"
             android:background="@color/input_register_bg"
             android:hint="Password"
             android:inputType="textPassword"
@@ -51,12 +57,29 @@
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
 
+            <Button
+                android:id="@+id/btnEye_1"
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight=".1"
+                android:background="@drawable/open_password"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/input_register_bg"
+            android:layout_marginTop="10dp">
+
         <EditText
             android:id="@+id/edtPassword_again"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:padding="10dp"
+            android:layout_weight=".9"
             android:background="@color/input_register_bg"
             android:hint="Password again"
             android:inputType="textPassword"
@@ -64,10 +87,22 @@
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
 
+            <Button
+                android:id="@+id/btnEye_2"
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight=".1"
+                android:background="@drawable/open_password"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"/>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnChooseAvatar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Chose Avatar"
             android:textColor="@color/input_register" />
 

@@ -14,6 +14,11 @@
         app:showAsAction="ifRoom"
         android:title="Search" />
 
+    <item android:id="@+id/nav_refesh"
+        android:icon="@drawable/refesh"
+        app:showAsAction="ifRoom"
+        android:title="Refesh" />
+
     <item android:id="@+id/nav_piechart"
         android:icon="@drawable/chartart"
         android:title="Chart art" />

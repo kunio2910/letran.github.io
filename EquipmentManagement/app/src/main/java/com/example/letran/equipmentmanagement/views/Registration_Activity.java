@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.utils.Encrypte;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,10 +51,10 @@ import es.dmoral.toasty.Toasty;
 public class Registration_Activity extends Activity implements View.OnClickListener {
 
     private EditText inputName, inputPassword, inputPasswordAgain;
-    private Button btnRegistration,btnChoseAvatar;
+    private Button btnRegistration,btnChoseAvatar,btnShowPassword_1,btnShowPassword_2;
     private ImageView imageAvatar;
     private ProgressDialog  pDialog;
-    private boolean isExitName;
+    private boolean isExitName,isShow_1,isShow_2;
     private String image_encode_avatar;
 
     @Override
@@ -70,17 +73,49 @@ public class Registration_Activity extends Activity implements View.OnClickListe
     private void Initiate(){
         AppConfig.FLAG = 1;
         image_encode_avatar = "";
+        isShow_1 = false;
+        isShow_2 = false;
         inputName = (EditText)findViewById(R.id.edtName);
         inputPassword = (EditText)findViewById(R.id.edtPassword);
         inputPasswordAgain = (EditText)findViewById(R.id.edtPassword_again);
         btnRegistration = (Button)findViewById(R.id.btnRegistration);
         btnChoseAvatar = (Button)findViewById(R.id.btnChooseAvatar);
+        btnShowPassword_1 = (Button)findViewById(R.id.btnEye_1);
+        btnShowPassword_2 = (Button)findViewById(R.id.btnEye_2);
         imageAvatar = (ImageView)findViewById(R.id.imgAvatar);
 
         pDialog = new ProgressDialog(Registration_Activity.this);
         pDialog.setCancelable(false);
 
         isExitName = false;
+
+        btnShowPassword_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow_1 == false){
+                    inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnShowPassword_1.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow_1 == true){
+                    inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnShowPassword_1.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow_1 = !isShow_1;
+            }
+        });
+
+        btnShowPassword_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow_2 == false){
+                    inputPasswordAgain.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnShowPassword_2.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow_2 == true){
+                    inputPasswordAgain.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnShowPassword_2.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow_2 = !isShow_2;
+            }
+        });
     }
 
     @Override
@@ -170,12 +205,16 @@ public class Registration_Activity extends Activity implements View.OnClickListe
 
                     if(isExitName == false){
                         Toasty.error(getApplicationContext(), "Name is exited...! ", Toast.LENGTH_SHORT, true).show();
-                    }else
-                        CallRegistration(name,password,image_encode_avatar);
+                    }else {
+                        String encrypt_password = Encrypte.encrypt(password);
+                        CallRegistration(name, encrypt_password, image_encode_avatar);
+                    }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
                     Toasty.error(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }

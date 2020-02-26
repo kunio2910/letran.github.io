@@ -285,6 +285,10 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         } else if (id == R.id.nav_search) {
             Intent intent = new Intent(DrawerLayout_Activity.this, SearchDevice_Activity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_refesh) {
+            AppConfig.FLAG = 0;
+            Intent intent = new Intent(DrawerLayout_Activity.this, MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_piechart) {
             Intent intent = new Intent(DrawerLayout_Activity.this, Chart_Activity.class);
             startActivity(intent);

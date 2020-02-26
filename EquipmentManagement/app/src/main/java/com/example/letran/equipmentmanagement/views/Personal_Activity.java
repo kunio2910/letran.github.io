@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.utils.Encrypte;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +38,7 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
     private EditText edtName, edtPassword, edtCreate_time;
     private Button btnCancel, btnChangePassword;
     private ProgressDialog pDialog;
+    boolean isShow_1,isShow_2,isShow_3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +58,9 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
 
     private void Initiate() {
         AppConfig.FLAG = 1;
+        isShow_1 =false;
+        isShow_2 =false;
+        isShow_3 =false;
         edtName = (EditText) findViewById(R.id.edtname);
         edtPassword = (EditText) findViewById(R.id.edtpassword);
         edtCreate_time = (EditText) findViewById(R.id.edtcreatetime);
@@ -91,6 +99,9 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
         final EditText edtOldPassword = (EditText)alertLayout.findViewById(R.id.edtOldPassword);
         final EditText edtNewPassword = (EditText)alertLayout.findViewById(R.id.edtNewPassword);
         final EditText edtConfirmPassword = (EditText)alertLayout.findViewById(R.id.edtConfirmPassword);
+        final Button btnEye_1 = (Button)alertLayout.findViewById(R.id.btnEye_1);
+        final Button btnEye_2 = (Button)alertLayout.findViewById(R.id.btnEye_2);
+        final Button btnEye_3 = (Button)alertLayout.findViewById(R.id.btnEye_3);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("CHANGE PASSWORD");
@@ -119,11 +130,58 @@ public class Personal_Activity extends DrawerLayout_Activity implements View.OnC
                 }else if(!newpassword.equals(confirmpassword)){
                     Toasty.error(getApplicationContext(), "Password and confirmpassword is not same...!", Toast.LENGTH_SHORT, true).show();
                 }else{
-                    CallUpdatePassword(AppConfig.ID_USER, newpassword);
+                    try {
+                        newpassword = Encrypte.encrypt(newpassword);
+                        CallUpdatePassword(AppConfig.ID_USER, newpassword);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
 
+
+        btnEye_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow_1 == false){
+                    edtOldPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnEye_1.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow_1 == true){
+                    edtOldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnEye_1.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow_1 = !isShow_1;
+            }
+        });
+
+        btnEye_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow_2 == false){
+                    edtNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnEye_2.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow_2 == true){
+                    edtNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnEye_2.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow_2 = !isShow_2;
+            }
+        });
+
+        btnEye_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow_3 == true){
+                    edtConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnEye_3.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow_3 == false){
+                    edtConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnEye_3.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow_3 = !isShow_3;
+            }
+        });
         AlertDialog dialog = alert.create();
         dialog.show();
     }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +26,7 @@ import com.example.letran.equipmentmanagement.R;
 import com.example.letran.equipmentmanagement.database.DatabaseHelper;
 import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
+import com.example.letran.equipmentmanagement.utils.Encrypte;
 
 
 import org.json.JSONArray;
@@ -35,10 +38,10 @@ import es.dmoral.toasty.Toasty;
 public class Login_Activity extends Activity implements View.OnClickListener {
 
     private EditText inputName, inputPassword;
-    private Button btnLogin, btnRegistration;
+    private Button btnLogin, btnRegistration,btnShowPassword;
     private ProgressDialog pDialog;
     private DatabaseHelper db;
-    private boolean isCheckLogin;
+    private boolean isCheckLogin,isShow = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,11 +55,26 @@ public class Login_Activity extends Activity implements View.OnClickListener {
 
         btnLogin.setOnClickListener(this);
         btnRegistration.setOnClickListener(this);
+
+        btnShowPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow == false){
+                    inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    btnShowPassword.setBackgroundResource(R.drawable.close_password);
+                }else if(isShow == true){
+                    inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    btnShowPassword.setBackgroundResource(R.drawable.open_password);
+                }
+                isShow = !isShow;
+            }
+        });
     }
 
     private void Initiate(){
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegistration = (Button)findViewById(R.id.btnLinkToRegistrerScreen);
+        btnShowPassword = (Button)findViewById(R.id.btnEye);
 
         inputName = (EditText)findViewById(R.id.edtName);
         inputPassword = (EditText)findViewById(R.id.edtPassword);
@@ -123,7 +141,9 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                         String create_time_temp = json_data.getString("create_time");
                         String avatar_temp = json_data.getString("avatar");
                         Log.e("info", "Login Response: " + response.toString());
-                        if(name.equals(name_temp) && password.equals(password_temp)){
+
+                        String decrypt_password = Encrypte.decrypt(password_temp);
+                        if(name.equals(name_temp) && password.equals(decrypt_password)){
                             isCheckLogin = true;
                             AppConfig.NAME_USER = name;
                             AppConfig.PERMISSION_USER = permission_temp;
@@ -150,6 +170,8 @@ public class Login_Activity extends Activity implements View.OnClickListener {
                     // JSON error
                     e.printStackTrace();
                     Toasty.error(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_SHORT, true).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
