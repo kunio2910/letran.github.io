@@ -177,7 +177,10 @@ public class LineChart_Fragment extends Fragment {
         edtTotal.setText(String.valueOf(total));
         if(month >= 1) {
             if(total > 0) {
-                ratio = Math.round(yAxisData[month] * 100 / yAxisData[month - 1]);
+                if(yAxisData[month - 1] > 0 )
+                    ratio = Math.round(yAxisData[month] * 100 / yAxisData[month - 1]);
+                else
+                    ratio = Math.round(yAxisData[month] * 100);
             }else{
                 ratio = Math.round(yAxisData[month-1] * 100 / 1);
             }
@@ -185,7 +188,10 @@ public class LineChart_Fragment extends Fragment {
             if (yAxisData[month] > yAxisData[month - 1]) {
                 edtRatio.setText("+" + String.valueOf(ratio) + "%");
             } else if (yAxisData[month] <= yAxisData[month - 1]) {
-                edtRatio.setText("-" + String.valueOf(ratio) + "%");
+                if(ratio != 0)
+                    edtRatio.setText("-" + String.valueOf(ratio) + "%");
+                else
+                    edtRatio.setText("0%");
             }
         }else if(month == 0){
             edtRatio.setText("0%");

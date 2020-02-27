@@ -160,7 +160,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, MainActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_personal) {
-            Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
+            Intent intent = new Intent(DrawerLayout_Activity.this, Profile_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
             Intent intent = new Intent(DrawerLayout_Activity.this, SearchDevice_Activity.class);
@@ -280,7 +280,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, MainActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_personal) {
-            Intent intent = new Intent(DrawerLayout_Activity.this, Personal_Activity.class);
+            Intent intent = new Intent(DrawerLayout_Activity.this, Profile_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
             Intent intent = new Intent(DrawerLayout_Activity.this, SearchDevice_Activity.class);
