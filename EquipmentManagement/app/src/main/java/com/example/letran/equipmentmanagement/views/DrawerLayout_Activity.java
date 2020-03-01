@@ -2,6 +2,7 @@ package com.example.letran.equipmentmanagement.views;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -58,6 +59,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
     private TextView txtname;
     private String image_encode_avatar;
     private ProgressDialog pDialog;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         actionBar.setBackgroundDrawable(d);
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
 
         drawerToggle = new ActionBarDrawerToggle(DrawerLayout_Activity.this, mDrawer, R.string.ns_menu_open, R.string.ns_menu_close);
         mDrawer.addDrawerListener(drawerToggle);
@@ -169,9 +174,14 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Chart_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
+            loginPrefsEditor.clear();
+            loginPrefsEditor.commit();
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
             startActivity(intent);
+        }else if (id == R.id.nav_exit) {
+            System.exit(0);
         }
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawer.closeDrawer(GravityCompat.START);
         return false;
@@ -188,6 +198,12 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.UPDATE_AVATAR, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+                loginPrefsEditor = loginPreferences.edit();
+
+                loginPrefsEditor.putString("avatar",image);
+                loginPrefsEditor.commit();
+
                 Log.e("info", "Update Response: " + response.toString());
                 AppConfig.FLAG = 0;
                 CallGetAvatar(AppConfig.ID_USER);
@@ -293,8 +309,12 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
             Intent intent = new Intent(DrawerLayout_Activity.this, Chart_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
+            loginPrefsEditor.clear();
+            loginPrefsEditor.commit();
             Intent intent = new Intent(DrawerLayout_Activity.this, Login_Activity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_exit) {
+            System.exit(0);
         }
         return super.onOptionsItemSelected(item);
     }

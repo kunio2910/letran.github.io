@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginLeft="-70dp"
+        android:layout_marginLeft="-50dp"
         android:layout_marginRight="20dp">
 
         <TextView
@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".4"
             android:text="Total:"
+            android:textSize="23dp"
             android:textAlignment="center"/>
 
         <EditText
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginLeft="-70dp"
+        android:layout_marginLeft="-50dp"
         android:layout_marginRight="20dp">
 
         <TextView
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".4"
             android:text="Current:"
+            android:textSize="23dp"
             android:textAlignment="center"/>
 
         <EditText
@@ -64,7 +66,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginLeft="-70dp"
+        android:layout_marginLeft="-50dp"
         android:layout_marginRight="20dp">
 
         <TextView
@@ -72,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".4"
             android:text="Ratio:"
+            android:textSize="23dp"
             android:textAlignment="center"/>
 
         <EditText

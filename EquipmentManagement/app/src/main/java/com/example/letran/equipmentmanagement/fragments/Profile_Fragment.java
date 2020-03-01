@@ -82,6 +82,7 @@ public class Profile_Fragment extends Fragment implements View.OnClickListener {
             case R.id.btnCancel:
                 Intent intent = new Intent(getContext(),MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
                 break;
             case R.id.btnChangePassword:
                 ShowDialog();

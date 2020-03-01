@@ -28,7 +28,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:text="NAME :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -39,7 +39,7 @@
             android:layout_marginLeft="60dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/titleName"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="11dp"
             android:autoSizeMaxTextSize="15dp"
@@ -54,7 +54,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:text="CREATE TIME :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -65,7 +65,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/titleCreateTime"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="11dp"
             android:autoSizeMaxTextSize="15dp"
@@ -80,7 +80,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:text="DESCRIPTION :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -91,7 +91,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/titleCreateTime"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="11dp"
             android:autoSizeMaxTextSize="15dp"
@@ -106,7 +106,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:text="ISSUE :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -118,7 +118,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@+id/titleCreateTime"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="11dp"
             android:autoSizeMaxTextSize="15dp"
@@ -133,7 +133,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:text="CREATER :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -145,7 +145,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@+id/titleCreater"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="11dp"
             android:autoSizeMaxTextSize="15dp"
@@ -160,15 +160,15 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:text="IMAGE :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btnChooseImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Chose Image :"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:layout_below="@+id/titleImage"
             android:layout_marginLeft="10dp"
             android:textColor="@color/input_login"
@@ -181,14 +181,14 @@
             android:layout_below="@id/btnChooseImage"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="15dp"/>
 
         <TextView
             android:id="@+id/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11dp"
+            android:textSize="15dp"
             android:text="* The image is pending moderation"
             android:layout_below="@id/image"
             android:layout_centerHorizontal="true"
@@ -198,33 +198,39 @@
 
         <Button
             android:id="@+id/btnchange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
             android:text="CHANGE"
+            android:textSize="23dp"
             android:layout_below="@id/note"
             android:layout_toLeftOf="@+id/btnapprove"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:enabled="false"/>
+            android:layout_marginBottom="10dp"
+            android:enabled="false"
+            android:background="@drawable/button"/>
 
         <Button
             android:id="@+id/btnapprove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
             android:text="APPROVE"
+            android:textSize="23dp"
             android:layout_below="@id/note"
             android:layout_centerHorizontal="true"
-            android:enabled="false"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:enabled="false"
+            android:background="@drawable/button"/>
 
         <Button
             android:id="@+id/btndelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
             android:text="DELETE"
+            android:textSize="23dp"
             android:layout_below="@id/note"
             android:layout_toRightOf="@+id/btnapprove"
             android:enabled="false"
-            android:layout_marginLeft="30dp"/>
+            android:background="@drawable/button"/>
     </RelativeLayout>
 
 </ScrollView>

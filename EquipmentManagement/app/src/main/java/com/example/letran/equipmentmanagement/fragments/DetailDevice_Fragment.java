@@ -114,7 +114,7 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }else{
              if(AppConfig.PERMISSION_USER.equals("1")){
                 btndelete.setEnabled(true);
-            }
+             }
         }
 
         btnapprove.setOnClickListener(this);
