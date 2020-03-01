@@ -29,7 +29,6 @@ import com.example.letran.equipmentmanagement.utils.AppConfig;
 import com.example.letran.equipmentmanagement.utils.AppController;
 import com.example.letran.equipmentmanagement.utils.Encrypte;
 import com.example.letran.equipmentmanagement.views.MainActivity;
-import com.example.letran.equipmentmanagement.views.Personal_Activity;
 
 import java.util.HashMap;
 import java.util.Map;
