@@ -114,6 +114,10 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
         }else{
              if(AppConfig.PERMISSION_USER.equals("1")){
                 btndelete.setEnabled(true);
+                btnapprove.setEnabled(false);
+             } else if(AppConfig.PERMISSION_USER.equals("2")){
+                 btndelete.setEnabled(false);
+                 btnapprove.setEnabled(true);
              }
         }
 
@@ -260,7 +264,10 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 String note = edtNotes.getText().toString();
                 String date_approve = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                CallApprove(approver,id,note,date_approve);
+                if(AppConfig.PERMISSION_USER.equals("1"))
+                    CallApprove(approver,id,note,date_approve);
+                else if(AppConfig.PERMISSION_USER.equals("2"))
+                    CallApprove_1(approver,id,note,date_approve);
             }
         });
 
@@ -308,6 +315,54 @@ public class DetailDevice_Fragment extends Fragment implements View.OnClickListe
                 params.put("id", id);
                 params.put("note",note);
                 params.put("date_approve",date_approve);
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        AppController.getInstance(getContext()).addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void CallApprove_1(final String approver, final String id, final String note, final String date_approve) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_approvdevice";
+        AppConfig.FLAG = 0;
+        pDialog.setMessage("Approving...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.ACCOUNTING_APPROVE_DEVICE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("info", "Approve Response: " + response.toString());
+                hideDialog();
+                Toasty.success(getContext(), "Approve Completed...!", Toast.LENGTH_SHORT, true).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        Intent intent = new Intent(getContext(),MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                }, 1000);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("infor", "Approve Error: " + error.getMessage());
+                Toasty.warning(getContext(), "Please click approve again...!", Toast.LENGTH_SHORT, true).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            public Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("approver_1", AppConfig.NAME_USER);
+                params.put("id", id);
+                params.put("note_1",note);
+                params.put("date_approve_1",date_approve);
                 return params;
             }
         };

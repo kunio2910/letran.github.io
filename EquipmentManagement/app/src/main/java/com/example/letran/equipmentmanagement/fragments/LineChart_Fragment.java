@@ -187,11 +187,13 @@ public class LineChart_Fragment extends Fragment {
 
             if (yAxisData[month] > yAxisData[month - 1]) {
                 edtRatio.setText("+" + String.valueOf(ratio) + "%");
-            } else if (yAxisData[month] <= yAxisData[month - 1]) {
+            } else if (yAxisData[month] < yAxisData[month - 1]) {
                 if(ratio != 0)
                     edtRatio.setText("-" + String.valueOf(ratio) + "%");
                 else
                     edtRatio.setText("0%");
+            } else if(yAxisData[month] == yAxisData[month - 1]){
+                edtRatio.setText("+0%");
             }
         }else if(month == 0){
             edtRatio.setText("0%");

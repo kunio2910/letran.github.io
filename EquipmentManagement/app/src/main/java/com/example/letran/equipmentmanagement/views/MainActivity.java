@@ -151,6 +151,9 @@ public class MainActivity extends DrawerLayout_Activity implements ActionBar.Tab
                             device.setCreater(json_data.getString("creater"));
                             device.setNote(json_data.getString("note"));
                             device.setDateApprove(json_data.getString("date_approve"));
+                            device.setApprover_1(json_data.getString("approver_1"));
+                            device.setNote_1(json_data.getString("note_1"));
+                            device.setDateApprove_1(json_data.getString("date_approve_1"));
                             Log.e("info", "Login Response: " + response.toString());
 
                             AppConfig.LST_DEVICES.add(device);

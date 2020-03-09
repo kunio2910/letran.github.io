@@ -64,6 +64,9 @@ public class ShowDevices_Fragment extends Fragment {
                 bundle.putString("creater", AppConfig.LST_DEVICES.get(position).getCreater());
                 bundle.putString("note", AppConfig.LST_DEVICES.get(position).getNote());
                 bundle.putString("date_approve", AppConfig.LST_DEVICES.get(position).getDateApprove());
+                bundle.putString("approver_1", AppConfig.LST_DEVICES.get(position).getApprover_1());
+                bundle.putString("note_1", AppConfig.LST_DEVICES.get(position).getNote_1());
+                bundle.putString("date_approve_1", AppConfig.LST_DEVICES.get(position).getDateApprove_1());
 
                 intent.putExtras(bundle);
                 startActivity(intent);

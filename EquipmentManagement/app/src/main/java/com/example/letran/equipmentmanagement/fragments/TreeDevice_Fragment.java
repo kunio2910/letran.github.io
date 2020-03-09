@@ -21,7 +21,7 @@ import com.example.letran.equipmentmanagement.views.ShowDetail_Activity;
 
 public class TreeDevice_Fragment extends Fragment implements View.OnClickListener {
 
-    private String name_device, description, issue, url_image, create_time, approver,creater,note,date_approve, id;
+    private String name_device, description, issue, url_image, create_time, approver,approver_1,creater,note,note_1,date_approve,date_approve_1, id;
     Button btnstar_1,btnstar_2,btnstar_3;
 
     @Nullable
@@ -43,6 +43,10 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
             btnstar_2.setBackgroundResource(R.drawable.star_yellow);
         }
 
+        if(!approver_1.isEmpty()) {
+            btnstar_3.setBackgroundResource(R.drawable.star_yellow);
+        }
+
         btnstar_1.setOnClickListener(this);
         btnstar_2.setOnClickListener(this);
         btnstar_3.setOnClickListener(this);
@@ -60,6 +64,9 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
         creater = bundle.getString("creater");
         note = bundle.getString("note");
         date_approve = bundle.getString("date_approve");
+        approver_1 = bundle.getString("approver_1");
+        note_1 = bundle.getString("note_1");
+        date_approve_1 = bundle.getString("date_approve_1");
     }
 
     @Override
@@ -102,15 +109,18 @@ public class TreeDevice_Fragment extends Fragment implements View.OnClickListene
                     edtNote.setText(note);
             }
         }else if(star == 3){
-            if (approver.isEmpty()) {
-                edtApprover.setText("Empty");
-                edtDate.setText("Empty");
-                edtNote.setText("Empty");
-            }else{
+            if (approver_1.isEmpty()) {
                 edtApprover.setText("Empty");
                 edtDate.setText("Empty");
                 edtNote.setText("Empty");
 
+            }else{
+                edtApprover.setText(approver_1);
+                edtDate.setText(date_approve_1);
+                if(note.isEmpty() || note == null){
+                    edtNote.setText("Empty");
+                }else
+                    edtNote.setText(note_1);
             }
         }
 

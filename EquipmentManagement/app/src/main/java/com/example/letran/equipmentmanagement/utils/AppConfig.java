@@ -12,6 +12,7 @@ public class AppConfig {
     public static String UPDATE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/update_device.php";
     public static String GET_DEVICE_DETAILS = "https://letrantrong.000webhostapp.com/ManageDevices/devices/get_device_details.php";
     public static String APPROVE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/approve_device.php";
+    public static String ACCOUNTING_APPROVE_DEVICE = "https://letrantrong.000webhostapp.com/ManageDevices/devices/accounting_approve_device.php";
 
     public static String GET_ALL_USERS = "https://letrantrong.000webhostapp.com/ManageDevices/users/get_all_users.php";
     public static String REGISTRATION = "https://letrantrong.000webhostapp.com/ManageDevices/users/registration.php";

@@ -11,6 +11,9 @@ public class Device {
     private String creater;
     private String note;
     private String date_approve;
+    private String approver_1;
+    private String note_1;
+    private String date_approve_1;
 
     public static final String TABLE_NAME = "devices";
     public static final String COLUMN_ID = "id";
@@ -133,5 +136,29 @@ public class Device {
 
     public void setDateApprove(String date_approve) {
         this.date_approve = date_approve;
+    }
+
+    public String getApprover_1() {
+        return approver_1;
+    }
+
+    public void setApprover_1(String approver_1) {
+        this.approver_1 = approver_1;
+    }
+
+    public String getNote_1() {
+        return note_1;
+    }
+
+    public void setNote_1(String note_1) {
+        this.note_1 = note_1;
+    }
+
+    public String getDateApprove_1() {
+        return date_approve_1;
+    }
+
+    public void setDateApprove_1(String date_approve_1) {
+        this.date_approve_1 = date_approve_1;
     }
 }

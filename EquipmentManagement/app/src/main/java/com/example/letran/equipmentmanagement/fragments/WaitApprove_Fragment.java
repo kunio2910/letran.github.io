@@ -51,6 +51,9 @@ public class WaitApprove_Fragment extends Fragment {
                 bundle.putString("creater", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getCreater());
                 bundle.putString("note", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getNote());
                 bundle.putString("date_approve", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getDateApprove());
+                bundle.putString("approver_1", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getApprover_1());
+                bundle.putString("note_1", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getNote_1());
+                bundle.putString("date_approve_1", AppConfig.LST_DEVICES_WAIT_APPROVED.get(position).getDateApprove_1());
 
                 intent.putExtras(bundle);
                 startActivity(intent);
