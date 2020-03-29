@@ -79,6 +79,7 @@ public class DrawerLayout_Activity extends AppCompatActivity implements Navigati
         //Change color for actionbar
         //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#26ae90")));
 
+        //set image for actionbar
         Drawable d = getResources().getDrawable(R.drawable.background_nav_header);
         actionBar.setBackgroundDrawable(d);
 
